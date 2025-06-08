@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,7 +22,7 @@ fun LoadingBar(
     Box(
         modifier = Modifier
             .height(4.dp)
-            .fillMaxWidth()
+            .width(226.dp)
             .background(
                 color = Neutral50,
                 shape = RoundedCornerShape(4.dp)
