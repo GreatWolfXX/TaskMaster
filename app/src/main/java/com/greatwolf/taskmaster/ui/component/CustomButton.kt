@@ -127,7 +127,6 @@ fun CustomButton(
     Surface(
         modifier = modifier
             .height(size.height)
-            .wrapContentWidth()
             .semantics { role = Role.Button }
             .clickable(
                 interactionSource = interactionSource,
