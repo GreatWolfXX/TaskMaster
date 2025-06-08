@@ -71,8 +71,7 @@ fun CustomButton(
     val interactionSource = remember { MutableInteractionSource() }
 
     val border = when (type) {
-        CustomButtonType.PRIMARY -> { null }
-
+        CustomButtonType.PRIMARY -> null
         CustomButtonType.SECONDARY -> {
             BorderStroke(
                 width = 1.dp,
@@ -80,51 +79,50 @@ fun CustomButton(
             )
         }
 
-        CustomButtonType.TERTIARY -> { null }
-
-        CustomButtonType.DESTRUCTIVE -> { null }
+        CustomButtonType.TERTIARY -> null
+        CustomButtonType.DESTRUCTIVE -> null
     }
 
     val containerColor = when (type) {
-        CustomButtonType.PRIMARY -> { Primary300 }
-        CustomButtonType.SECONDARY -> { Color.Transparent }
-        CustomButtonType.TERTIARY -> { Color.Transparent }
-        CustomButtonType.DESTRUCTIVE -> { Error100 }
+        CustomButtonType.PRIMARY -> Primary300
+        CustomButtonType.SECONDARY -> Color.Transparent
+        CustomButtonType.TERTIARY -> Color.Transparent
+        CustomButtonType.DESTRUCTIVE -> Error100
     }
 
     val disabledContainerColor = when (type) {
-        CustomButtonType.PRIMARY -> { Primary50 }
-        CustomButtonType.SECONDARY -> { Color.Transparent }
-        CustomButtonType.TERTIARY -> { Color.Transparent }
-        CustomButtonType.DESTRUCTIVE -> { Error25 }
+        CustomButtonType.PRIMARY -> Primary50
+        CustomButtonType.SECONDARY -> Color.Transparent
+        CustomButtonType.TERTIARY -> Color.Transparent
+        CustomButtonType.DESTRUCTIVE -> Error25
     }
 
     val contentColor = when (type) {
-        CustomButtonType.PRIMARY -> { Light }
-        CustomButtonType.SECONDARY -> { Neutral500 }
-        CustomButtonType.TERTIARY -> { Neutral200 }
-        CustomButtonType.DESTRUCTIVE -> { Light }
+        CustomButtonType.PRIMARY -> Light
+        CustomButtonType.SECONDARY -> Neutral500
+        CustomButtonType.TERTIARY -> Neutral200
+        CustomButtonType.DESTRUCTIVE -> Light
     }
 
     val disabledContentColor = when (type) {
-        CustomButtonType.PRIMARY -> { Light }
-        CustomButtonType.SECONDARY -> { Neutral200 }
-        CustomButtonType.TERTIARY -> { Neutral200 }
-        CustomButtonType.DESTRUCTIVE -> { Light }
+        CustomButtonType.PRIMARY -> Light
+        CustomButtonType.SECONDARY -> Neutral200
+        CustomButtonType.TERTIARY -> Neutral200
+        CustomButtonType.DESTRUCTIVE -> Light
     }
 
     val rippleColor = when (type) {
-        CustomButtonType.PRIMARY -> { Primary600 }
-        CustomButtonType.SECONDARY -> { Neutral25 }
-        CustomButtonType.TERTIARY -> { Neutral25 }
-        CustomButtonType.DESTRUCTIVE -> { Error200 }
+        CustomButtonType.PRIMARY -> Primary600
+        CustomButtonType.SECONDARY -> Neutral25
+        CustomButtonType.TERTIARY -> Neutral25
+        CustomButtonType.DESTRUCTIVE -> Error200
     }
 
     val textStyle = when (size) {
-        CustomButtonSize.LARGE -> { Typography.bodyLarge }
-        CustomButtonSize.MEDIUM -> { Typography.bodyLarge }
-        CustomButtonSize.SMALL -> { Typography.labelLarge }
-        CustomButtonSize.XSMALL -> { BodyXSmallTextStyleSemiBold }
+        CustomButtonSize.LARGE -> Typography.bodyLarge
+        CustomButtonSize.MEDIUM -> Typography.bodyLarge
+        CustomButtonSize.SMALL -> Typography.labelLarge
+        CustomButtonSize.XSMALL -> BodyXSmallTextStyleSemiBold
     }
     Surface(
         modifier = modifier
