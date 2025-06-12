@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
@@ -19,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
@@ -29,12 +29,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.greatwolf.taskmaster.ui.theme.BodyXSmallTextStyleSemiBold
 import com.greatwolf.taskmaster.ui.theme.Error100
-import com.greatwolf.taskmaster.ui.theme.Error200
 import com.greatwolf.taskmaster.ui.theme.Error25
+import com.greatwolf.taskmaster.ui.theme.Error300
 import com.greatwolf.taskmaster.ui.theme.Light
 import com.greatwolf.taskmaster.ui.theme.Neutral100
 import com.greatwolf.taskmaster.ui.theme.Neutral200
-import com.greatwolf.taskmaster.ui.theme.Neutral25
+import com.greatwolf.taskmaster.ui.theme.Neutral400
 import com.greatwolf.taskmaster.ui.theme.Neutral500
 import com.greatwolf.taskmaster.ui.theme.Neutral600
 import com.greatwolf.taskmaster.ui.theme.Primary300
@@ -113,9 +113,9 @@ fun CustomButton(
 
     val rippleColor = when (type) {
         CustomButtonType.PRIMARY -> Primary600
-        CustomButtonType.SECONDARY -> Neutral25
-        CustomButtonType.TERTIARY -> Neutral25
-        CustomButtonType.DESTRUCTIVE -> Error200
+        CustomButtonType.SECONDARY -> Neutral400
+        CustomButtonType.TERTIARY -> Neutral400
+        CustomButtonType.DESTRUCTIVE -> Error300
     }
 
     val textStyle = when (size) {
@@ -124,17 +124,21 @@ fun CustomButton(
         CustomButtonSize.SMALL -> Typography.labelLarge
         CustomButtonSize.XSMALL -> BodyXSmallTextStyleSemiBold
     }
+
+    val shape = RoundedCornerShape(12.dp)
+
     Surface(
         modifier = modifier
             .height(size.height)
             .semantics { role = Role.Button }
+            .clip(shape)
             .clickable(
                 interactionSource = interactionSource,
                 indication = ripple(color = rippleColor),
                 enabled = enabled,
                 onClick = onClick
             ),
-        shape = RoundedCornerShape(12.dp),
+        shape = shape,
         color = if (enabled) containerColor else disabledContainerColor,
         contentColor = if (enabled) contentColor else disabledContentColor,
         border = border
