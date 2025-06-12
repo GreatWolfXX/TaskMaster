@@ -13,8 +13,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -27,6 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greatwolf.taskmaster.R
+import com.greatwolf.taskmaster.koin.viewModelModules
 import com.greatwolf.taskmaster.ui.component.CustomButton
 import com.greatwolf.taskmaster.ui.component.CustomButtonSize
 import com.greatwolf.taskmaster.ui.component.CustomButtonType
@@ -41,14 +48,69 @@ import com.greatwolf.taskmaster.ui.theme.Neutral700
 import com.greatwolf.taskmaster.ui.theme.Primary0
 import com.greatwolf.taskmaster.ui.theme.Primary600
 import com.greatwolf.taskmaster.ui.theme.Typography
+import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.KoinApplicationPreview
+
 
 @Composable
-fun OnboardingScreen() {
+fun OnboardingScreen(
+    vm: OnboardingViewModel = koinViewModel()
+) {
+    val event by vm.event.collectAsState(OnboardingEvent.Idle)
 
+    val pages = listOf(
+        OnboardingPages.First(isSystemInDarkTheme()),
+        OnboardingPages.Second(isSystemInDarkTheme()),
+        OnboardingPages.Third(isSystemInDarkTheme()),
+        OnboardingPages.Fourth
+    )
+    val pagerState = rememberPagerState(
+        pageCount = { pages.size }
+    )
+
+    LaunchedEffect(event) {
+        when (val currentEvent = event) {
+            OnboardingEvent.Idle -> {}
+            is OnboardingEvent.Next -> {
+                pagerState.animateScrollToPage(currentEvent.page)
+            }
+
+            OnboardingEvent.Finish -> {
+
+            }
+        }
+    }
+
+    HorizontalPager(
+        state = pagerState
+    ) { position ->
+        val page = pages[position]
+        if (position < pagerState.pageCount.dec()) {
+            PagerScreen(
+                pagerState = pagerState,
+                onNext = {
+                    vm.onIntent(OnboardingIntent.NextClicked(position.inc()))
+                },
+                onSkip = {
+                    vm.onIntent(OnboardingIntent.FinishClicked)
+                },
+                onboardingPages = page
+            )
+        } else {
+            FinalPagerScreen(
+                onboardingPages = page
+            ) {
+                vm.onIntent(OnboardingIntent.FinishClicked)
+            }
+        }
+    }
 }
 
 @Composable
 private fun PagerScreen(
+    pagerState: PagerState,
+    onNext: () -> Unit,
+    onSkip: () -> Unit,
     onboardingPages: OnboardingPages
 ) {
     val backgroundImage = if (isSystemInDarkTheme()) Primary600 else Primary0
@@ -103,8 +165,7 @@ private fun PagerScreen(
                     )
                     Spacer(modifier = Modifier.size(16.dp))
                     SliderIndicator(
-                        pageSize = 4,
-                        currentPage = 0
+                        pagerState = pagerState
                     )
                 }
                 Column(
@@ -114,15 +175,17 @@ private fun PagerScreen(
                         modifier = Modifier.fillMaxWidth(),
                         type = CustomButtonType.PRIMARY,
                         size = CustomButtonSize.MEDIUM,
-                        text = stringResource(R.string.next)
-                    ) { }
+                        text = stringResource(R.string.next),
+                        onClick = onNext
+                    )
                     Spacer(modifier = Modifier.size(16.dp))
                     CustomButton(
                         modifier = Modifier.fillMaxWidth(),
                         type = CustomButtonType.SECONDARY,
                         size = CustomButtonSize.MEDIUM,
-                        text = stringResource(R.string.skip)
-                    ) { }
+                        text = stringResource(R.string.skip),
+                        onClick = onSkip
+                    )
                     Spacer(modifier = Modifier.size(24.dp))
                 }
             }
@@ -131,8 +194,9 @@ private fun PagerScreen(
 }
 
 @Composable
-private fun FullSizePagerScreen(
-    onboardingPages: OnboardingPages
+private fun FinalPagerScreen(
+    onboardingPages: OnboardingPages,
+    onClick: () -> Unit
 ) {
     val darkGradientColors = listOf(Color.Transparent, Dark)
     val lightGradientColors = listOf(Color.Transparent, Light)
@@ -191,11 +255,20 @@ private fun FullSizePagerScreen(
                     modifier = Modifier.fillMaxWidth(),
                     type = CustomButtonType.PRIMARY,
                     size = CustomButtonSize.MEDIUM,
-                    text = stringResource(R.string.get_started)
-                ) { }
+                    text = stringResource(R.string.get_started),
+                    onClick = onClick
+                )
                 Spacer(modifier = Modifier.size(24.dp))
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun OnboardingScreenPreview() {
+    KoinApplicationPreview(application = { modules(viewModelModules) }) {
+        OnboardingScreen()
     }
 }
 
@@ -205,7 +278,16 @@ private fun FullSizePagerScreen(
 )
 @Composable
 private fun FirstPagerScreenPreview() {
-    PagerScreen(OnboardingPages.First(isSystemInDarkTheme()))
+    val pagerState = rememberPagerState(
+        pageCount = { 4 }
+    )
+
+    PagerScreen(
+        pagerState = pagerState,
+        onNext = {},
+        onSkip = {},
+        onboardingPages = OnboardingPages.First(isSystemInDarkTheme())
+    )
 }
 
 @Preview
@@ -214,7 +296,16 @@ private fun FirstPagerScreenPreview() {
 )
 @Composable
 private fun SecondPagerScreenPreview() {
-    PagerScreen(OnboardingPages.Second(isSystemInDarkTheme()))
+    val pagerState = rememberPagerState(
+        pageCount = { 4 }
+    )
+
+    PagerScreen(
+        pagerState = pagerState,
+        onNext = {},
+        onSkip = {},
+        onboardingPages = OnboardingPages.Second(isSystemInDarkTheme())
+    )
 }
 
 @Preview
@@ -223,7 +314,16 @@ private fun SecondPagerScreenPreview() {
 )
 @Composable
 private fun ThirdPagerScreenPreview() {
-    PagerScreen(OnboardingPages.Third(isSystemInDarkTheme()))
+    val pagerState = rememberPagerState(
+        pageCount = { 4 }
+    )
+
+    PagerScreen(
+        pagerState = pagerState,
+        onNext = {},
+        onSkip = {},
+        onboardingPages = OnboardingPages.Third(isSystemInDarkTheme())
+    )
 }
 
 @Preview
@@ -232,5 +332,5 @@ private fun ThirdPagerScreenPreview() {
 )
 @Composable
 private fun FourthPagerScreenPreview() {
-    FullSizePagerScreen(OnboardingPages.Fourth)
+    FinalPagerScreen(OnboardingPages.Fourth) {}
 }
