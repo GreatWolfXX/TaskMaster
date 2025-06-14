@@ -1,0 +1,13 @@
+<resources>
+    <string name="onboarding_title_1">Effortless Task Management</string>
+    <string name="onboarding_desc_1">Discover the ease of organizing your daily tasks with Task Master - the ultimate mobile app designed to simplify your to-do list. Stay productive and focused effortlessly</string>
+    <string name="onboarding_title_2">Stay on Top of Your Goals</string>
+    <string name="onboarding_desc_2">Elevate your productivity, the powerful mobile app that helps you set, track, and achieve your goals. Effortlessly manage tasks and make progress towards your objectives</string>
+    <string name="onboarding_title_3">Insightful Task Analytics</string>
+    <string name="onboarding_desc_3">Uncover valuable insights into your productivity habits with Task Master\'s comprehensive reporting and statistics feature</string>
+    <string name="onboarding_title_4">Master Your Day,\nEvery Day</string>
+    <string name="onboarding_desc_4">Elevate your productivity with Task Master, where efficiency meets simplicity. Master your daily tasks effortlessly, and ensuring success in every endeavor.</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="get_started">Get Started</string>
+</resources>
