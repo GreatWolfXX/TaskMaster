@@ -33,8 +33,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greatwolf.onboarding.di.onboardingModule
-import com.greatwolf.ui.component.*
-import com.greatwolf.ui.theme.*
+import com.greatwolf.ui.component.CustomButton
+import com.greatwolf.ui.component.CustomButtonSize
+import com.greatwolf.ui.component.CustomButtonType
+import com.greatwolf.ui.component.SliderIndicator
+import com.greatwolf.ui.theme.BodyXSmallTextStyleNormal
+import com.greatwolf.ui.theme.Dark
+import com.greatwolf.ui.theme.Light
+import com.greatwolf.ui.theme.Neutral200
+import com.greatwolf.ui.theme.Neutral50
+import com.greatwolf.ui.theme.Neutral500
+import com.greatwolf.ui.theme.Neutral700
+import com.greatwolf.ui.theme.Primary0
+import com.greatwolf.ui.theme.Primary600
+import com.greatwolf.ui.theme.Typography
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinApplicationPreview
 

@@ -1,4 +1,3 @@
-import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.LibraryExtension
 import com.greatwolf.convention.configureKotlinAndroid
 import com.greatwolf.convention.libs
