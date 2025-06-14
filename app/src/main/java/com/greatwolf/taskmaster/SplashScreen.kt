@@ -37,7 +37,9 @@ import com.greatwolf.ui.theme.Typography
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen() {
+fun SplashScreen(
+    navigate: () -> Unit
+) {
     var targetValue by remember { mutableFloatStateOf(0f) }
 
     val percentage by animateFloatAsState(
@@ -48,6 +50,7 @@ fun SplashScreen() {
     LaunchedEffect(Unit) {
         targetValue = 1f
         delay(3000L)
+        navigate()
     }
     Column(
         modifier = Modifier
@@ -108,5 +111,5 @@ private fun LoadingBarWithText(
 @Preview
 @Composable
 fun SplashScreenPreview() {
-    SplashScreen()
+    SplashScreen { }
 }
