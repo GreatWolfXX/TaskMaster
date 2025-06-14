@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.taskmaster.application.compose)
-//    alias(libs.plugins.jetbrains.kotlin.serialization)
+    alias(libs.plugins.taskmaster.navigation)
 }
 
 android {
@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId = "com.greatwolf.taskmaster"
         versionCode = 1
-        versionName = "0.2.0"
+        versionName = "0.3.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -48,10 +48,4 @@ dependencies {
 
     // Koin
     implementation(libs.koin.androidx.compose)
-
-    //Navigation 3
-//    implementation(libs.androidx.navigation3.ui)
-//    implementation(libs.androidx.navigation3.runtime)
-//    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
-//    implementation(libs.kotlinx.serialization.core)
 }

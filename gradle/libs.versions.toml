@@ -31,6 +31,8 @@ kotlinSerialization = "2.1.21"
 kotlinxSerializationCore = "1.8.1"
 appcompat = "1.7.1"
 material = "1.12.0"
+appcompatVersion = "1.7.1"
+materialVersion = "1.12.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -70,6 +72,8 @@ android-tools-common = { group = "com.android.tools", name = "common", version.r
 compose-gradlePlugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompatVersion" }
+material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -85,3 +89,4 @@ taskmaster-application-compose = { id = "taskmaster.application.compose" }
 taskmaster-library = { id = "taskmaster.library" }
 taskmaster-library-compose = { id = "taskmaster.library.compose" }
 taskmaster-feature = { id = "taskmaster.feature" }
+taskmaster-navigation = { id = "taskmaster.navigation" }
