@@ -53,5 +53,10 @@ gradlePlugin {
             id = libs.plugins.taskmaster.feature.get().pluginId
             implementationClass = "FeatureConventionPlugin"
         }
+
+        register("navigation") {
+            id = libs.plugins.taskmaster.navigation.get().pluginId
+            implementationClass = "NavigationConventionPlugin"
+        }
     }
 }

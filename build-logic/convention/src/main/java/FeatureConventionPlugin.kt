@@ -10,6 +10,7 @@ class FeatureConventionPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply(libs.findPlugin("taskmaster.library").get().get().pluginId)
                 apply(libs.findPlugin("taskmaster.library.compose").get().get().pluginId)
+                apply(libs.findPlugin("taskmaster.navigation").get().get().pluginId)
             }
 
             dependencies {
