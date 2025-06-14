@@ -1,4 +1,4 @@
-package com.greatwolf.taskmaster.ui.component
+package com.greatwolf.ui.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -27,20 +27,20 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.greatwolf.taskmaster.ui.theme.BodyXSmallTextStyleSemiBold
-import com.greatwolf.taskmaster.ui.theme.Error100
-import com.greatwolf.taskmaster.ui.theme.Error25
-import com.greatwolf.taskmaster.ui.theme.Error300
-import com.greatwolf.taskmaster.ui.theme.Light
-import com.greatwolf.taskmaster.ui.theme.Neutral100
-import com.greatwolf.taskmaster.ui.theme.Neutral200
-import com.greatwolf.taskmaster.ui.theme.Neutral400
-import com.greatwolf.taskmaster.ui.theme.Neutral500
-import com.greatwolf.taskmaster.ui.theme.Neutral600
-import com.greatwolf.taskmaster.ui.theme.Primary300
-import com.greatwolf.taskmaster.ui.theme.Primary50
-import com.greatwolf.taskmaster.ui.theme.Primary600
-import com.greatwolf.taskmaster.ui.theme.Typography
+import com.greatwolf.ui.theme.BodyXSmallTextStyleSemiBold
+import com.greatwolf.ui.theme.Error100
+import com.greatwolf.ui.theme.Error25
+import com.greatwolf.ui.theme.Error300
+import com.greatwolf.ui.theme.Light
+import com.greatwolf.ui.theme.Neutral100
+import com.greatwolf.ui.theme.Neutral200
+import com.greatwolf.ui.theme.Neutral400
+import com.greatwolf.ui.theme.Neutral500
+import com.greatwolf.ui.theme.Neutral600
+import com.greatwolf.ui.theme.Primary300
+import com.greatwolf.ui.theme.Primary50
+import com.greatwolf.ui.theme.Primary600
+import com.greatwolf.ui.theme.Typography
 
 enum class CustomButtonType {
     PRIMARY,

@@ -1,4 +1,4 @@
-package com.greatwolf.taskmaster.ui.screen
+package com.greatwolf.taskmaster
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -26,16 +26,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.greatwolf.taskmaster.R
-import com.greatwolf.taskmaster.ui.component.LoadingBar
-import com.greatwolf.taskmaster.ui.theme.BodyXSmallTextStyleNormal
-import com.greatwolf.taskmaster.ui.theme.Dark
-import com.greatwolf.taskmaster.ui.theme.Light
-import com.greatwolf.taskmaster.ui.theme.Neutral200
-import com.greatwolf.taskmaster.ui.theme.Neutral50
-import com.greatwolf.taskmaster.ui.theme.Neutral500
-import com.greatwolf.taskmaster.ui.theme.Neutral700
-import com.greatwolf.taskmaster.ui.theme.Typography
+import com.greatwolf.ui.theme.BodyXSmallTextStyleNormal
+import com.greatwolf.ui.theme.Dark
+import com.greatwolf.ui.theme.Light
+import com.greatwolf.ui.theme.Neutral200
+import com.greatwolf.ui.theme.Neutral50
+import com.greatwolf.ui.theme.Neutral500
+import com.greatwolf.ui.theme.Neutral700
+import com.greatwolf.ui.theme.Typography
 import kotlinx.coroutines.delay
 
 @Composable
@@ -96,7 +94,7 @@ private fun LoadingBarWithText(
             .wrapContentSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        LoadingBar(percentage)
+        com.greatwolf.ui.component.LoadingBar(percentage)
         Spacer(modifier = Modifier.size(16.dp))
         Text(
             text = stringResource(R.string.loading),

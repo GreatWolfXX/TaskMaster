@@ -1,4 +1,5 @@
-package com.greatwolf.taskmaster.ui.theme
+//package com.greatwolf.ui.theme
+package com.greatwolf.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

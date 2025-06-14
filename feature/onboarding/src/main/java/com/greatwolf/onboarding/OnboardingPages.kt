@@ -1,8 +1,7 @@
-package com.greatwolf.taskmaster.ui.screen.onboarding
+package com.greatwolf.onboarding
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import com.greatwolf.taskmaster.R
 
 sealed class OnboardingPages(
     @DrawableRes val image: Int,

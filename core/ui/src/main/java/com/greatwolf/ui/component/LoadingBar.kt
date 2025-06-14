@@ -1,9 +1,7 @@
-package com.greatwolf.taskmaster.ui.component
+package com.greatwolf.ui.component
 
-import android.health.connect.datatypes.units.Percentage
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -12,8 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.greatwolf.taskmaster.ui.theme.Neutral50
-import com.greatwolf.taskmaster.ui.theme.Primary200
+import com.greatwolf.ui.theme.Neutral50
+import com.greatwolf.ui.theme.Primary200
 
 @Composable
 fun LoadingBar(

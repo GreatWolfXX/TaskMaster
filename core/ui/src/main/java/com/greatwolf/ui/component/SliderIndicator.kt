@@ -1,4 +1,4 @@
-package com.greatwolf.taskmaster.ui.component
+package com.greatwolf.ui.component
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
@@ -18,9 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
-import com.greatwolf.taskmaster.ui.theme.Neutral50
-import com.greatwolf.taskmaster.ui.theme.Neutral700
-import com.greatwolf.taskmaster.ui.theme.Primary200
+import com.greatwolf.ui.theme.Neutral50
+import com.greatwolf.ui.theme.Neutral700
+import com.greatwolf.ui.theme.Primary200
 import kotlin.math.absoluteValue
 
 private const val SLIDER_INDICATOR_SIZE = 3

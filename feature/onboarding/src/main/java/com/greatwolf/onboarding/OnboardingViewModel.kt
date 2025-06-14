@@ -1,4 +1,4 @@
-package com.greatwolf.taskmaster.ui.screen.onboarding
+package com.greatwolf.onboarding
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

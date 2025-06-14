@@ -1,4 +1,4 @@
-package com.greatwolf.taskmaster.ui.theme
+package com.greatwolf.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

@@ -1,4 +1,4 @@
-package com.greatwolf.taskmaster.ui.screen.onboarding
+package com.greatwolf.onboarding
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
@@ -32,22 +32,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.greatwolf.taskmaster.R
-import com.greatwolf.taskmaster.koin.viewModelModules
-import com.greatwolf.taskmaster.ui.component.CustomButton
-import com.greatwolf.taskmaster.ui.component.CustomButtonSize
-import com.greatwolf.taskmaster.ui.component.CustomButtonType
-import com.greatwolf.taskmaster.ui.component.SliderIndicator
-import com.greatwolf.taskmaster.ui.theme.BodyXSmallTextStyleNormal
-import com.greatwolf.taskmaster.ui.theme.Dark
-import com.greatwolf.taskmaster.ui.theme.Light
-import com.greatwolf.taskmaster.ui.theme.Neutral200
-import com.greatwolf.taskmaster.ui.theme.Neutral50
-import com.greatwolf.taskmaster.ui.theme.Neutral500
-import com.greatwolf.taskmaster.ui.theme.Neutral700
-import com.greatwolf.taskmaster.ui.theme.Primary0
-import com.greatwolf.taskmaster.ui.theme.Primary600
-import com.greatwolf.taskmaster.ui.theme.Typography
+import com.greatwolf.onboarding.di.onboardingModule
+import com.greatwolf.ui.component.*
+import com.greatwolf.ui.theme.*
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinApplicationPreview
 
@@ -267,7 +254,7 @@ private fun FinalPagerScreen(
 @Preview
 @Composable
 fun OnboardingScreenPreview() {
-    KoinApplicationPreview(application = { modules(viewModelModules) }) {
+    KoinApplicationPreview(application = { modules(onboardingModule) }) {
         OnboardingScreen()
     }
 }
