@@ -5,10 +5,10 @@ plugins {
 }
 
 android {
-    namespace = "com.greatwolf.data"
+    namespace = "com.greatwolf.datastore"
 }
 
 dependencies {
-    implementation(projects.core.datastore)
-    implementation(projects.core.domain)
+    // DataStore
+    implementation(libs.datastore.preferences)
 }

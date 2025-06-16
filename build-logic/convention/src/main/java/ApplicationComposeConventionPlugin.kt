@@ -19,7 +19,6 @@ class ApplicationComposeConventionPlugin : Plugin<Project> {
                 configureKotlinAndroid(this)
                 configureAndroidCompose(this)
                 defaultConfig.targetSdk = libs.findVersion("targetSdk").get().toString().toInt()
-
             }
         }
     }

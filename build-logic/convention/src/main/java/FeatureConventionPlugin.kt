@@ -16,7 +16,7 @@ class FeatureConventionPlugin : Plugin<Project> {
             dependencies {
                 implementation(project(":core:ui"))
 //                implementation(project(":core:model"))
-//                implementation(project(":core:domain"))
+                implementation(project(":core:domain"))
 //                implementation(project(":core:common"))
 
                 implementation(libs.findLibrary("koin-androidx-compose").get())
