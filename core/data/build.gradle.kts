@@ -11,4 +11,11 @@ android {
 dependencies {
     implementation(projects.core.datastore)
     implementation(projects.core.domain)
+//    implementation(projects.core.models)
+
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.core)
+
+    // Koin
+    implementation(libs.koin.core)
 }

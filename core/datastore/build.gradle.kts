@@ -9,6 +9,9 @@ android {
 }
 
 dependencies {
+    // Koin
+    implementation(libs.koin.core)
+
     // DataStore
     implementation(libs.datastore.preferences)
 }
