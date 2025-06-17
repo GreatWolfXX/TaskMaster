@@ -16,10 +16,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,6 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.greatwolf.onboarding.di.onboardingModule
 import com.greatwolf.ui.component.CustomButton
 import com.greatwolf.ui.component.CustomButtonSize
@@ -47,15 +48,20 @@ import com.greatwolf.ui.theme.Neutral700
 import com.greatwolf.ui.theme.Primary0
 import com.greatwolf.ui.theme.Primary600
 import com.greatwolf.ui.theme.Typography
+import com.greatwolf.ui.util.LocalSnackbarHostState
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinApplicationPreview
 
 
 @Composable
 fun OnboardingScreen(
-    vm: OnboardingViewModel = koinViewModel()
+    vm: OnboardingViewModel = koinViewModel(),
+    navigateToHome: () -> Unit
 ) {
-    val event by vm.event.collectAsState(OnboardingEvent.Idle)
+    val snackbarHostState = LocalSnackbarHostState.current
+    val snackbarErrorMessage = stringResource(R.string.err_unexpected)
+
+    val event by vm.event.collectAsStateWithLifecycle(OnboardingEvent.Idle)
 
     val pages = listOf(
         OnboardingPages.First(isSystemInDarkTheme()),
@@ -70,12 +76,20 @@ fun OnboardingScreen(
     LaunchedEffect(event) {
         when (val currentEvent = event) {
             OnboardingEvent.Idle -> {}
+
+            OnboardingEvent.ShowErrorSnackbar -> {
+                snackbarHostState.showSnackbar(
+                        message = snackbarErrorMessage,
+                        duration = SnackbarDuration.Short
+                    )
+            }
+
             is OnboardingEvent.Next -> {
                 pagerState.animateScrollToPage(currentEvent.page)
             }
 
             OnboardingEvent.Finish -> {
-
+                navigateToHome()
             }
         }
     }
@@ -267,7 +281,7 @@ private fun FinalPagerScreen(
 @Composable
 fun OnboardingScreenPreview() {
     KoinApplicationPreview(application = { modules(onboardingModule) }) {
-        OnboardingScreen()
+        OnboardingScreen {}
     }
 }
 

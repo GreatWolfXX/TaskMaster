@@ -1,3 +1,5 @@
+import com.greatwolf.convention.implementation
+
 plugins {
     alias(libs.plugins.taskmaster.library)
 }
@@ -7,5 +9,6 @@ android {
 }
 
 dependencies {
-
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.core)
 }

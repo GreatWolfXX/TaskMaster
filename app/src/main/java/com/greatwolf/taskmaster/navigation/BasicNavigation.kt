@@ -26,7 +26,11 @@ fun BasicNavigation() {
             }
 
             entry<Route.Onboarding> {
-                OnboardingScreen()
+                OnboardingScreen(
+                    navigateToHome = {
+
+                    }
+                )
             }
         }
     )
