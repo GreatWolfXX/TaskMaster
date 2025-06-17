@@ -9,7 +9,7 @@ class LibraryComposeConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
-                apply(libs.findPlugin("android-library").get().get().pluginId)
+                apply(libs.findPlugin("taskmaster.library").get().get().pluginId)
                 apply(libs.findPlugin("kotlin-compose").get().get().pluginId)
             }
 

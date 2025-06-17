@@ -13,6 +13,9 @@ internal fun Project.configureAndroidCompose(
         }
 
         dependencies {
+            implementation(libs.findLibrary("androidx-core-ktx").get())
+            implementation(libs.findLibrary("androidx-lifecycle-runtime-ktx").get())
+
             val bom = libs.findLibrary("androidx-compose-bom").get()
             implementation(platform(bom))
             implementation(libs.findLibrary("androidx-ui").get())

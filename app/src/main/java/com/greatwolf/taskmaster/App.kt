@@ -1,6 +1,8 @@
 package com.greatwolf.taskmaster
 
 import android.app.Application
+import com.greatwolf.data.di.dataModule
+import com.greatwolf.domain.di.domainModule
 import com.greatwolf.onboarding.di.onboardingModule
 import com.greatwolf.taskmaster.di.appModule
 import org.koin.android.ext.koin.androidContext
@@ -13,6 +15,8 @@ class App : Application() {
             androidContext(this@App)
             modules(
                 appModule,
+                dataModule,
+                domainModule,
                 onboardingModule
             )
         }

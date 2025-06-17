@@ -5,15 +5,13 @@ plugins {
 }
 
 android {
-    namespace = "com.greatwolf.domain"
+    namespace = "com.greatwolf.datastore"
 }
 
 dependencies {
-//    implementation(projects.core.models)
-
     // Koin
     implementation(libs.koin.core)
 
-    // Coroutines
-    implementation(libs.kotlinx.coroutines.core)
+    // DataStore
+    implementation(libs.datastore.preferences)
 }

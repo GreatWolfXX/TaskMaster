@@ -10,4 +10,6 @@
     <string name="next">Next</string>
     <string name="skip">Skip</string>
     <string name="get_started">Get Started</string>
+
+    <string name="err_unexpected">An unexpected error has occurred. Please try again!</string>
 </resources>
