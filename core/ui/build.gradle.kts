@@ -1,5 +1,4 @@
 plugins {
-    alias(libs.plugins.taskmaster.library)
     alias(libs.plugins.taskmaster.library.compose)
 }
 

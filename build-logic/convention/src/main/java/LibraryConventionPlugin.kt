@@ -18,10 +18,6 @@ class LibraryConventionPlugin : Plugin<Project> {
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
             }
-
-            dependencies {
-                implementation(libs.findLibrary("kotlinx-coroutines-core").get())
-            }
         }
     }
 }

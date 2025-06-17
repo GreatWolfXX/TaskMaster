@@ -8,7 +8,6 @@ class FeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
-                apply(libs.findPlugin("taskmaster.library").get().get().pluginId)
                 apply(libs.findPlugin("taskmaster.library.compose").get().get().pluginId)
                 apply(libs.findPlugin("taskmaster.navigation").get().get().pluginId)
             }
@@ -17,7 +16,7 @@ class FeatureConventionPlugin : Plugin<Project> {
                 implementation(project(":core:ui"))
 //                implementation(project(":core:model"))
                 implementation(project(":core:domain"))
-//                implementation(project(":core:common"))
+                implementation(project(":core:common"))
 
                 implementation(libs.findLibrary("koin-androidx-compose").get())
             }
