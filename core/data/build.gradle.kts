@@ -13,6 +13,9 @@ dependencies {
     implementation(projects.core.domain)
 //    implementation(projects.core.models)
 
+    // DataStore
+    implementation(libs.datastore.preferences)
+
     // Coroutines
     implementation(libs.kotlinx.coroutines.core)
 
