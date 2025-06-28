@@ -72,12 +72,6 @@ fun CustomTextField(
 
     val shape = RoundedCornerShape(10.dp)
 
-    val colorHint = if (isError) {
-        Error100
-    } else {
-        if (isSystemInDarkTheme()) Neutral300 else Neutral400
-    }
-
     val borderColor = if (isFocused) {
         Primary50
     } else {
@@ -129,30 +123,16 @@ fun CustomTextField(
                 )
             }
         }
-        if (showHint || isError) {
-            Spacer(modifier = Modifier.size(6.dp))
-            Row {
-                if (isError) {
-                    Icon(
-                        modifier = Modifier.size(16.dp),
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_info_circle),
-                        tint = Error100,
-                        contentDescription = null
-                    )
-                    Spacer(modifier = Modifier.size(4.dp))
-                }
-                Text(
-                    text = hint,
-                    style = Typography.bodySmall,
-                    color = colorHint
-                )
-            }
-        }
+        Hint(
+            hint = hint,
+            isError = isError,
+            showHint = showHint
+        )
     }
 }
 
 @Composable
-fun CustomTextFieldDecoration(
+private fun CustomTextFieldDecoration(
     type: CustomTextFieldType,
     leadingIcon: ImageVector? = null,
     placeholder: String,
@@ -211,12 +191,45 @@ fun CustomTextFieldDecoration(
     }
 }
 
+@Composable
+private fun Hint(
+    hint: String,
+    isError: Boolean,
+    showHint: Boolean
+) {
+    val colorHint = if (isError) {
+        Error100
+    } else {
+        if (isSystemInDarkTheme()) Neutral300 else Neutral400
+    }
+
+    if (showHint || isError) {
+        Spacer(modifier = Modifier.size(6.dp))
+        Row {
+            if (isError) {
+                Icon(
+                    modifier = Modifier.size(16.dp),
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_info_circle),
+                    tint = Error100,
+                    contentDescription = null
+                )
+                Spacer(modifier = Modifier.size(4.dp))
+            }
+            Text(
+                text = hint,
+                style = Typography.bodySmall,
+                color = colorHint
+            )
+        }
+    }
+}
+
 @Preview
 @Preview(
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-fun CustomTextFieldPreview() {
+private fun CustomTextFieldPreview() {
     CustomTextField(
         type = CustomTextFieldType.PASSWORD,
         label = "Label",
