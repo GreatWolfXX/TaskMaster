@@ -1,5 +1,6 @@
 package com.greatwolf.taskmaster
 
+import android.content.res.Configuration
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -108,7 +109,12 @@ private fun LoadingBarWithText(
     }
 }
 
+
+
 @Preview
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
 fun SplashScreenPreview() {
     SplashScreen { }

@@ -1,5 +1,6 @@
 package com.greatwolf.ui.component
 
+import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -99,8 +100,8 @@ fun CustomButton(
 
     val contentColor = when (type) {
         CustomButtonType.PRIMARY -> Light
-        CustomButtonType.SECONDARY -> Neutral500
-        CustomButtonType.TERTIARY -> Neutral200
+        CustomButtonType.SECONDARY -> if (isSystemInDarkTheme()) Neutral200 else Neutral500
+        CustomButtonType.TERTIARY -> if (isSystemInDarkTheme()) Neutral200 else Neutral500
         CustomButtonType.DESTRUCTIVE -> Light
     }
 
@@ -175,6 +176,9 @@ fun CustomButton(
 }
 
 @Preview
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
 fun CustomButtonPreview() {
     CustomButton(
