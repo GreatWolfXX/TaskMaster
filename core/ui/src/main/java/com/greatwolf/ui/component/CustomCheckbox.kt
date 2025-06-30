@@ -3,11 +3,11 @@ package com.greatwolf.ui.component
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ripple
@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greatwolf.ui.R
@@ -32,6 +33,7 @@ import com.greatwolf.ui.theme.Primary600
 
 @Composable
 fun CustomCheckbox(
+    modifier: Modifier = Modifier,
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
     enabled: Boolean = true,
@@ -59,7 +61,7 @@ fun CustomCheckbox(
     }
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .size(20.dp)
             .background(
                 color = backgroundColor,
@@ -71,11 +73,13 @@ fun CustomCheckbox(
                 color = borderColor
             )
             .clip(shape)
-            .clickable(
+            .toggleable(
+                value = checked,
                 interactionSource = interactionSource,
                 indication = ripple(color = if (checked) Primary600 else Neutral400),
                 enabled = enabled,
-                onClick = { onCheckedChange(!checked) }
+                role = Role.Checkbox,
+                onValueChange = onCheckedChange,
             ),
         contentAlignment = Alignment.Center
     ) {
