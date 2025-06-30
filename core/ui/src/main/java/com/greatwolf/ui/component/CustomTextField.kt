@@ -1,7 +1,7 @@
 package com.greatwolf.ui.component
 
 import android.content.res.Configuration
-import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -30,7 +30,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -56,9 +55,9 @@ fun CustomTextField(
     modifier: Modifier = Modifier,
     type: CustomTextFieldType = CustomTextFieldType.STANDARD,
     leadingIcon: ImageVector? = null,
-    label: String,
-    placeholder: String,
-    hint: String,
+    label: String = "",
+    placeholder: String = "",
+    hint: String = "",
     value: String,
     onValueChanged: (String) -> Unit,
     isError: Boolean = false,
@@ -78,7 +77,7 @@ fun CustomTextField(
         if (isSystemInDarkTheme()) Neutral600 else Neutral100
     }
 
-    val elevationShadow by animateDpAsState(if(isFocused) 1.dp else 0.dp)
+    val borderShadowColorAlpha by animateFloatAsState(if (isFocused) 0.4f else 0f)
 
     Column {
         Text(
@@ -89,10 +88,10 @@ fun CustomTextField(
         Spacer(modifier = Modifier.size(6.dp))
         Box(
             modifier = Modifier
-                .shadow(
-                    elevation = elevationShadow,
+                .border(
+                    width = 2.dp,
                     shape = RoundedCornerShape(12.dp),
-                    spotColor = Primary200
+                    color = Primary200.copy(borderShadowColorAlpha)
                 )
                 .padding(1.dp)
         ) {
@@ -114,7 +113,7 @@ fun CustomTextField(
                     type = type,
                     leadingIcon = leadingIcon,
                     placeholder = placeholder,
-                    showPlaceholder = isFocused,
+                    showPlaceholder = !isFocused,
                     passwordVisibility = passwordVisibility,
                     onPasswordVisibilityClick = {
                         passwordVisibility = !passwordVisibility
