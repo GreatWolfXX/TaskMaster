@@ -35,6 +35,7 @@ dependencies {
     implementation(projects.core.ui)
 
     implementation(projects.feature.onboarding)
+    implementation(projects.feature.auth)
 
     //Tests
     testImplementation(libs.junit)
