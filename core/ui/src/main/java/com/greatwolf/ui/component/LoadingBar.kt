@@ -40,7 +40,7 @@ fun LoadingBar(
 
 @Preview
 @Composable
-fun LoadingBarPreview() {
+private fun LoadingBarPreview() {
     LoadingBar(
         percentage = 0.5f
     )

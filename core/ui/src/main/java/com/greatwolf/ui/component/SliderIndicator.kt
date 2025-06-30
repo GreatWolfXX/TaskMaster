@@ -71,7 +71,7 @@ fun SliderIndicator(
 
 @Preview
 @Composable
-fun SliderIndicatorPreview() {
+private fun SliderIndicatorPreview() {
     val pagerState = rememberPagerState(
         pageCount = { 4 }
     )
