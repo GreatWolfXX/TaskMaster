@@ -1,5 +1,6 @@
 package com.greatwolf.ui.component
 
+import android.content.res.Configuration
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -50,6 +51,9 @@ fun DividerWithText(
 }
 
 @Preview
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
 private fun DividerWithTextPreview() {
     DividerWithText("Test")

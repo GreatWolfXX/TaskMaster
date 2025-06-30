@@ -1,5 +1,6 @@
 package com.greatwolf.ui.component
 
+import android.content.res.Configuration
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -70,6 +71,9 @@ fun SliderIndicator(
 }
 
 @Preview
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
 private fun SliderIndicatorPreview() {
     val pagerState = rememberPagerState(

@@ -116,6 +116,6 @@ private fun LoadingBarWithText(
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-fun SplashScreenPreview() {
+private fun SplashScreenPreview() {
     SplashScreen { }
 }

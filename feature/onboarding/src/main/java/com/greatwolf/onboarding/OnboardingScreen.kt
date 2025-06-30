@@ -278,8 +278,11 @@ private fun FinalPagerScreen(
 }
 
 @Preview
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
-fun OnboardingScreenPreview() {
+private fun OnboardingScreenPreview() {
     KoinApplicationPreview(application = { modules(onboardingModule) }) {
         OnboardingScreen {}
     }
