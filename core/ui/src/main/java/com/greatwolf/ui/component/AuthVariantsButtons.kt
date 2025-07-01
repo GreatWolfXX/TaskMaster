@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.greatwolf.ui.R
 import com.greatwolf.ui.theme.Dark
 import com.greatwolf.ui.theme.Light
-import com.greatwolf.ui.theme.Neutral0
+import com.greatwolf.ui.theme.Neutral50
 import com.greatwolf.ui.theme.Neutral900
 
 @Composable
@@ -39,7 +39,7 @@ fun AuthVariantsButtons(
             modifier = Modifier
                 .semantics { role = Role.Button }
                 .clip(CircleShape)
-                .background(if (isSystemInDarkTheme()) Neutral900 else Neutral0)
+                .background(if (isSystemInDarkTheme()) Neutral900 else Neutral50)
                 .clickable(onClick = onClickApple)
         ) {
             Icon(
@@ -56,7 +56,7 @@ fun AuthVariantsButtons(
             modifier = Modifier
                 .semantics { role = Role.Button }
                 .clip(CircleShape)
-                .background(if (isSystemInDarkTheme()) Neutral900 else Neutral0)
+                .background(if (isSystemInDarkTheme()) Neutral900 else Neutral50)
                 .clickable(onClick = onClickGoogle)
         ) {
             Icon(
@@ -73,7 +73,7 @@ fun AuthVariantsButtons(
             modifier = Modifier
                 .semantics { role = Role.Button }
                 .clip(CircleShape)
-                .background(if (isSystemInDarkTheme()) Neutral900 else Neutral0)
+                .background(if (isSystemInDarkTheme()) Neutral900 else Neutral50)
                 .clickable(onClick = onClickFacebook)
         ) {
             Icon(
