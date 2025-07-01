@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -49,15 +50,17 @@ import com.greatwolf.ui.theme.Primary0
 import com.greatwolf.ui.theme.Primary600
 import com.greatwolf.ui.theme.Typography
 import com.greatwolf.ui.util.LocalSnackbarHostState
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinApplicationPreview
-
 
 @Composable
 fun OnboardingScreen(
     vm: OnboardingViewModel = koinViewModel(),
-    navigateToHome: () -> Unit
+    navigateToSignUp: () -> Unit
 ) {
+    val coroutineScope = rememberCoroutineScope()
+
     val snackbarHostState = LocalSnackbarHostState.current
     val snackbarErrorMessage = stringResource(R.string.err_unexpected)
 
@@ -74,22 +77,18 @@ fun OnboardingScreen(
     )
 
     LaunchedEffect(event) {
-        when (val currentEvent = event) {
+        when (event) {
             OnboardingEvent.Idle -> {}
 
             OnboardingEvent.ShowErrorSnackbar -> {
                 snackbarHostState.showSnackbar(
-                        message = snackbarErrorMessage,
-                        duration = SnackbarDuration.Short
-                    )
-            }
-
-            is OnboardingEvent.Next -> {
-                pagerState.animateScrollToPage(currentEvent.page)
+                    message = snackbarErrorMessage,
+                    duration = SnackbarDuration.Short
+                )
             }
 
             OnboardingEvent.Finish -> {
-                navigateToHome()
+                navigateToSignUp()
             }
         }
     }
@@ -102,7 +101,9 @@ fun OnboardingScreen(
             PagerScreen(
                 pagerState = pagerState,
                 onNext = {
-                    vm.onIntent(OnboardingIntent.NextClicked(position.inc()))
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(position.inc())
+                    }
                 },
                 onSkip = {
                     vm.onIntent(OnboardingIntent.FinishClicked)
