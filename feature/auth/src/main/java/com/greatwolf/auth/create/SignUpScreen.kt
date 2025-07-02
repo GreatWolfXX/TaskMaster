@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -21,6 +22,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.greatwolf.auth.R
 import com.greatwolf.ui.component.AuthVariantsButtons
 import com.greatwolf.ui.component.CustomButton
@@ -41,9 +43,26 @@ import com.greatwolf.ui.theme.Typography
 import com.greatwolf.ui.util.PRIVACY_TAG
 import com.greatwolf.ui.util.SIGN_IN_TAG
 import com.greatwolf.ui.util.TERMS_TAG
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun SignUpScreen() {
+fun SignUpScreen(
+    vm: SignUpViewModel = koinViewModel()
+) {
+    val state by vm.state.collectAsStateWithLifecycle()
+    SignUpContent(
+        state = state,
+        onIntent = { intent ->
+            vm.onIntent(intent)
+        }
+    )
+}
+
+@Composable
+private fun SignUpContent(
+    state: SignUpUiState,
+    onIntent: (SignUpIntent) -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -68,27 +87,37 @@ fun SignUpScreen() {
         CustomTextField(
             label = stringResource(R.string.your_email),
             placeholder = stringResource(R.string.email),
-            value = "",
-            onValueChanged = { },
+            value = state.email,
+            onValueChanged = { value ->
+                onIntent(SignUpIntent.EnterEmail(value))
+            }
         )
         Spacer(modifier = Modifier.size(16.dp))
         CustomTextField(
             type = CustomTextFieldType.PASSWORD,
             label = stringResource(R.string.password),
             placeholder = stringResource(R.string.password),
-            value = "",
-            onValueChanged = { },
+            value = state.password,
+            onValueChanged = { value ->
+                onIntent(SignUpIntent.EnterPassword(value))
+            },
         )
         Spacer(modifier = Modifier.size(16.dp))
         CustomTextField(
             type = CustomTextFieldType.PASSWORD,
             label = stringResource(R.string.confirm_password),
             placeholder = stringResource(R.string.confirm_password),
-            value = "",
-            onValueChanged = { },
+            value = state.passwordRepeat,
+            onValueChanged = { value ->
+                onIntent(SignUpIntent.EnterRepeatPassword(value))
+            },
         )
         Spacer(modifier = Modifier.size(16.dp))
         TermsAndPrivacyBlock(
+            checked = state.isAgreeTerms,
+            onCheckedChange = { value ->
+                onIntent(SignUpIntent.ChangeIsAgreeTerms(value))
+            },
             onClickTerms = { },
             onClickPrivacy = { }
         )
@@ -116,6 +145,8 @@ fun SignUpScreen() {
 
 @Composable
 private fun TermsAndPrivacyBlock(
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
     onClickTerms: () -> Unit,
     onClickPrivacy: () -> Unit
 ) {
@@ -156,8 +187,8 @@ private fun TermsAndPrivacyBlock(
         verticalAlignment = Alignment.CenterVertically
     ) {
         CustomCheckbox(
-            checked = false,
-            onCheckedChange = { }
+            checked = checked,
+            onCheckedChange = onCheckedChange
         )
         Spacer(modifier = Modifier.size(8.dp))
         Text(
