@@ -33,7 +33,7 @@ datastore = "1.1.7"
 
 coroutinesCore = "1.10.2"
 
-ktorClient = "3.2.0"
+ktorClient = "3.1.3"
 
 supabase = "3.1.3"
 
