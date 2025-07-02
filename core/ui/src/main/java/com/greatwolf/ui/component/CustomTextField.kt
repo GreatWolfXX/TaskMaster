@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,8 +31,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greatwolf.ui.R
@@ -39,6 +45,7 @@ import com.greatwolf.ui.theme.Error100
 import com.greatwolf.ui.theme.Neutral100
 import com.greatwolf.ui.theme.Neutral300
 import com.greatwolf.ui.theme.Neutral400
+import com.greatwolf.ui.theme.Neutral500
 import com.greatwolf.ui.theme.Neutral600
 import com.greatwolf.ui.theme.Neutral700
 import com.greatwolf.ui.theme.Primary200
@@ -63,11 +70,22 @@ fun CustomTextField(
     isError: Boolean = false,
     showHint: Boolean = false,
     enabled: Boolean = true,
+    imeAction: ImeAction = ImeAction.Done,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isFocused by interactionSource.collectIsFocusedAsState()
 
+    val typeKeyboardOptions = when (type) {
+        CustomTextFieldType.PASSWORD -> KeyboardOptions(keyboardType = KeyboardType.Password)
+        else -> KeyboardOptions.Default
+    }
+    val keyboardOptions = typeKeyboardOptions.copy(imeAction = imeAction)
+
     var passwordVisibility by remember { mutableStateOf(false) }
+    val visualTransformTypeCase = when (type) {
+        CustomTextFieldType.PASSWORD -> if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation()
+        else -> VisualTransformation.None
+    }
 
     val shape = RoundedCornerShape(10.dp)
 
@@ -107,13 +125,22 @@ fun CustomTextField(
                 value = value,
                 onValueChange = onValueChanged,
                 enabled = enabled,
+                textStyle = Typography.bodySmall.copy(
+                    color = if (isSystemInDarkTheme()) Neutral300 else Neutral700
+                ),
+                keyboardOptions = keyboardOptions,
+                singleLine = true,
+                visualTransformation = visualTransformTypeCase,
+                cursorBrush = SolidColor(
+                    value = if (isSystemInDarkTheme()) Neutral300 else Neutral500
+                ),
                 interactionSource = interactionSource
             ) { innerTextField ->
                 CustomTextFieldDecoration(
                     type = type,
                     leadingIcon = leadingIcon,
                     placeholder = placeholder,
-                    showPlaceholder = !isFocused,
+                    showPlaceholder = !isFocused && value.isEmpty(),
                     passwordVisibility = passwordVisibility,
                     onPasswordVisibilityClick = {
                         passwordVisibility = !passwordVisibility
