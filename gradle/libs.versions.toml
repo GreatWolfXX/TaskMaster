@@ -5,8 +5,8 @@ minSdk = "24"
 javaVersion = "11"
 jvmTarget = "11"
 
-agp = "8.10.1"
-kotlin = "2.0.21"
+agp = "8.11.0"
+kotlin = "2.2.0"
 coreKtx = "1.16.0"
 lifecycleRuntimeKtx = "2.9.1"
 
@@ -15,23 +15,27 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 
 activityCompose = "1.10.1"
-composeBom = "2025.06.00"
-androidTools = "31.10.1"
+composeBom = "2025.06.01"
+androidTools = "31.11.0"
 
-ksp = "2.0.21-1.0.28"
+ksp = "2.2.0-2.0.2"
 
-googleFonts = "1.8.2"
+googleFonts = "1.8.3"
 
 koin = "4.1.0"
 
-nav3Core = "1.0.0-alpha03"
-lifecycleViewmodelNav3 = "1.0.0-alpha01"
-kotlinSerialization = "2.1.21"
-kotlinxSerializationCore = "1.8.1"
+nav3Core = "1.0.0-alpha04"
+lifecycleViewmodelNav3 = "1.0.0-alpha02"
+kotlinSerialization = "2.2.0"
+kotlinxSerializationCore = "1.9.0"
 
 datastore = "1.1.7"
 
 coroutinesCore = "1.10.2"
+
+ktorClient = "3.2.0"
+
+supabase = "3.1.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -72,6 +76,17 @@ datastore-preferences = { group = "androidx.datastore", name = "datastore-prefer
 # Coroutines
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutinesCore" }
 
+# Ktor Client
+ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktorClient" }
+
+# Supabase
+supabase-bom = { group = "io.github.jan-tennert.supabase", name = "bom", version.ref = "supabase" }
+supabase-auth = { group = "io.github.jan-tennert.supabase", name = "auth-kt" }
+supabase-postgrest = { group = "io.github.jan-tennert.supabase", name = "postgrest-kt" }
+supabase-storage = { group = "io.github.jan-tennert.supabase", name = "storage-kt" }
+supabase-compose-auth = { group = "io.github.jan-tennert.supabase", name = "compose-auth" }
+supabase-coil3-integration = { group = "io.github.jan-tennert.supabase", name = "coil3-integration" }
+
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
@@ -86,7 +101,7 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 # Kotlin Serialization
-jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization"}
+jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization" }
 
 # Plugins defined by this project
 taskmaster-application-compose = { id = "taskmaster.application.compose" }
@@ -94,3 +109,4 @@ taskmaster-library = { id = "taskmaster.library" }
 taskmaster-library-compose = { id = "taskmaster.library.compose" }
 taskmaster-feature = { id = "taskmaster.feature" }
 taskmaster-navigation = { id = "taskmaster.navigation" }
+taskmaster-supabase = { id = "taskmaster.supabase" }
