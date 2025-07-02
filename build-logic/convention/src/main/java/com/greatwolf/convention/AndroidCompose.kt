@@ -23,6 +23,13 @@ internal fun Project.configureAndroidCompose(
             implementation(libs.findLibrary("androidx-ui-tooling").get())
             implementation(libs.findLibrary("androidx-ui-tooling-preview").get())
             implementation(libs.findLibrary("androidx-material3").get())
+
+            //Test
+            androidTestImplementation(libs.findLibrary("androidx-junit").get())
+            androidTestImplementation(platform(bom))
+            androidTestImplementation(libs.findLibrary("androidx-ui-test-junit4").get())
+            androidTestImplementation(libs.findLibrary("mockk-android").get())
+            debugImplementation(libs.findLibrary("androidx-ui-test-manifest").get())
         }
     }
 }

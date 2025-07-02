@@ -4,6 +4,7 @@ import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.dependencies
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
@@ -21,6 +22,13 @@ internal fun Project.configureKotlinAndroid(
             val projectJavaVersion = JavaVersion.toVersion(libs.findVersion("javaVersion").get())
             sourceCompatibility = projectJavaVersion
             targetCompatibility = projectJavaVersion
+        }
+
+        dependencies {
+            //Test
+            testImplementation(libs.findLibrary("junit").get())
+            testImplementation(libs.findLibrary("mockk").get())
+            testImplementation(libs.findLibrary("kotlinx-coroutines-test").get())
         }
     }
 
