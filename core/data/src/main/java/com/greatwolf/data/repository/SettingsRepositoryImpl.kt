@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.Flow
 class SettingsRepositoryImpl(
     private val dataStoreSettingsStore: DataStoreSettingsStore
 ) : SettingsRepository {
-    override suspend fun setOnboardingState(completed: Boolean) {
+
+    override suspend fun setOnboardingState(completed: Boolean) =
         dataStoreSettingsStore.saveState(PreferencesKey.onboardingKey, completed)
-    }
 
     override fun isOnboardingCompleted(): Flow<Boolean> =
         dataStoreSettingsStore.readState(PreferencesKey.onboardingKey, false)

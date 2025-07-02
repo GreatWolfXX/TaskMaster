@@ -58,5 +58,10 @@ gradlePlugin {
             id = libs.plugins.taskmaster.navigation.get().pluginId
             implementationClass = "NavigationConventionPlugin"
         }
+
+        register("supabase") {
+            id = libs.plugins.taskmaster.supabase.get().pluginId
+            implementationClass = "SupabaseConventionPlugin"
+        }
     }
 }
