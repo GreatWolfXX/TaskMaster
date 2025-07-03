@@ -19,6 +19,7 @@ import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -90,7 +91,8 @@ private fun SignUpContent(
             value = state.email,
             onValueChanged = { value ->
                 onIntent(SignUpIntent.EnterEmail(value))
-            }
+            },
+            imeAction = ImeAction.Next
         )
         Spacer(modifier = Modifier.size(16.dp))
         CustomTextField(
@@ -101,6 +103,7 @@ private fun SignUpContent(
             onValueChanged = { value ->
                 onIntent(SignUpIntent.EnterPassword(value))
             },
+            imeAction = ImeAction.Next
         )
         Spacer(modifier = Modifier.size(16.dp))
         CustomTextField(
