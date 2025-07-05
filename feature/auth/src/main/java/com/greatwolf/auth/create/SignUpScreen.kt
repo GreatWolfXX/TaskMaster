@@ -41,9 +41,9 @@ import com.greatwolf.ui.theme.Neutral700
 import com.greatwolf.ui.theme.Primary200
 import com.greatwolf.ui.theme.Primary300
 import com.greatwolf.ui.theme.Typography
-import com.greatwolf.ui.util.PRIVACY_TAG
-import com.greatwolf.ui.util.SIGN_IN_TAG
-import com.greatwolf.ui.util.TERMS_TAG
+import com.greatwolf.ui.constant.PRIVACY_TAG
+import com.greatwolf.ui.constant.SIGN_IN_TAG
+import com.greatwolf.ui.constant.TERMS_TAG
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
