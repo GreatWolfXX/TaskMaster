@@ -39,6 +39,7 @@ import com.greatwolf.ui.component.CustomButton
 import com.greatwolf.ui.component.CustomButtonSize
 import com.greatwolf.ui.component.CustomButtonType
 import com.greatwolf.ui.component.SliderIndicator
+import com.greatwolf.ui.provider.LocalSnackbarHostState
 import com.greatwolf.ui.theme.BodyXSmallTextStyleNormal
 import com.greatwolf.ui.theme.Dark
 import com.greatwolf.ui.theme.Light
@@ -49,7 +50,6 @@ import com.greatwolf.ui.theme.Neutral700
 import com.greatwolf.ui.theme.Primary0
 import com.greatwolf.ui.theme.Primary600
 import com.greatwolf.ui.theme.Typography
-import com.greatwolf.ui.util.LocalSnackbarHostState
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinApplicationPreview

@@ -13,8 +13,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.greatwolf.taskmaster.navigation.BasicNavigation
+import com.greatwolf.ui.provider.LocalSnackbarHostState
 import com.greatwolf.ui.theme.TaskMasterTheme
-import com.greatwolf.ui.util.LocalSnackbarHostState
 
 class MainActivity : ComponentActivity() {
 
