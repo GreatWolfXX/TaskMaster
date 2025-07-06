@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,6 +35,10 @@ import com.greatwolf.ui.component.CustomCheckbox
 import com.greatwolf.ui.component.CustomTextField
 import com.greatwolf.ui.component.CustomTextFieldType
 import com.greatwolf.ui.component.DividerWithText
+import com.greatwolf.ui.constant.PRIVACY_TAG
+import com.greatwolf.ui.constant.SIGN_IN_TAG
+import com.greatwolf.ui.constant.TERMS_TAG
+import com.greatwolf.ui.provider.LocalSnackbarHostState
 import com.greatwolf.ui.theme.BodyXSmallTextStyleNormal
 import com.greatwolf.ui.theme.Neutral0
 import com.greatwolf.ui.theme.Neutral200
@@ -40,10 +46,8 @@ import com.greatwolf.ui.theme.Neutral500
 import com.greatwolf.ui.theme.Neutral700
 import com.greatwolf.ui.theme.Primary200
 import com.greatwolf.ui.theme.Primary300
+import com.greatwolf.ui.theme.Primary600
 import com.greatwolf.ui.theme.Typography
-import com.greatwolf.ui.constant.PRIVACY_TAG
-import com.greatwolf.ui.constant.SIGN_IN_TAG
-import com.greatwolf.ui.constant.TERMS_TAG
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -51,6 +55,26 @@ fun SignUpScreen(
     vm: SignUpViewModel = koinViewModel()
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
+    val event by vm.event.collectAsStateWithLifecycle(SignUpEvent.Idle)
+
+    LaunchedEffect(event) {
+        when (event) {
+            SignUpEvent.Idle -> {}
+            SignUpEvent.Submit -> {
+
+            }
+        }
+    }
+
+    val snackbar = LocalSnackbarHostState.current
+    val snackbarMessage = state.snackbarMessage?.asString().orEmpty()
+
+    LaunchedEffect(state.snackbarMessage) {
+        if (state.snackbarMessage != null) {
+            snackbar.showSnackbar(snackbarMessage, duration = SnackbarDuration.Short)
+        }
+    }
+
     SignUpContent(
         state = state,
         onIntent = { intent ->
@@ -92,6 +116,8 @@ private fun SignUpContent(
             onValueChanged = { value ->
                 onIntent(SignUpIntent.EnterEmail(value))
             },
+            isError = state.emailError != null,
+            hint = state.emailError?.asString().orEmpty(),
             imeAction = ImeAction.Next
         )
         Spacer(modifier = Modifier.size(16.dp))
@@ -103,6 +129,8 @@ private fun SignUpContent(
             onValueChanged = { value ->
                 onIntent(SignUpIntent.EnterPassword(value))
             },
+            isError = state.passwordError != null,
+            hint = state.passwordError?.asString().orEmpty(),
             imeAction = ImeAction.Next
         )
         Spacer(modifier = Modifier.size(16.dp))
@@ -114,6 +142,8 @@ private fun SignUpContent(
             onValueChanged = { value ->
                 onIntent(SignUpIntent.EnterRepeatPassword(value))
             },
+            isError = state.passwordRepeatError != null,
+            hint = state.passwordRepeatError?.asString().orEmpty()
         )
         Spacer(modifier = Modifier.size(16.dp))
         TermsAndPrivacyBlock(
@@ -130,7 +160,9 @@ private fun SignUpContent(
             type = CustomButtonType.PRIMARY,
             size = CustomButtonSize.SMALL,
             text = stringResource(R.string.sign_up)
-        ) { }
+        ) {
+            onIntent(SignUpIntent.Submit)
+        }
         Spacer(modifier = Modifier.size(40.dp))
         DividerWithText(
             text = stringResource(R.string.or_sign_up_with)
@@ -162,7 +194,8 @@ private fun TermsAndPrivacyBlock(
             link = LinkAnnotation.Clickable(
                 tag = TERMS_TAG,
                 styles = TextLinkStyles(
-                    style = SpanStyle(color = clickableTextColor)
+                    style = SpanStyle(color = clickableTextColor),
+                    pressedStyle = SpanStyle(background = Primary600)
                 ),
                 linkInteractionListener = { onClickTerms() }
             )
@@ -176,7 +209,8 @@ private fun TermsAndPrivacyBlock(
             link = LinkAnnotation.Clickable(
                 tag = PRIVACY_TAG,
                 styles = TextLinkStyles(
-                    style = SpanStyle(color = clickableTextColor)
+                    style = SpanStyle(color = clickableTextColor),
+                    pressedStyle = SpanStyle(background = Primary600)
                 ),
                 linkInteractionListener = { onClickPrivacy() }
             )
@@ -218,7 +252,8 @@ private fun AlreadyHaveAccountBlock(
                     style = SpanStyle(
                         color = clickableTextColor,
                         fontWeight = Typography.labelMedium.fontWeight
-                    )
+                    ),
+                    pressedStyle = SpanStyle(background = Primary600)
                 ),
                 linkInteractionListener = { onClick() }
             )

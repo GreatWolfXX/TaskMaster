@@ -1,6 +1,7 @@
 package com.greatwolf.ui.component
 
 import android.content.res.Configuration
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -97,7 +98,9 @@ fun CustomTextField(
 
     val borderShadowColorAlpha by animateFloatAsState(if (isFocused) 0.4f else 0f)
 
-    Column {
+    Column(
+        modifier = Modifier.animateContentSize()
+    ) {
         Text(
             text = label,
             style = Typography.labelMedium,
