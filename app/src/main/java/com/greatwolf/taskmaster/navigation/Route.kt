@@ -9,4 +9,7 @@ sealed class Route : NavKey {
 
     @Serializable
     data object Onboarding : Route()
+
+    @Serializable
+    data object SignUp : Route()
 }

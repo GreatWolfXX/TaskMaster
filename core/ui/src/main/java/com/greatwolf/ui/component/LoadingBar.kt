@@ -1,5 +1,6 @@
 package com.greatwolf.ui.component
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -39,8 +40,11 @@ fun LoadingBar(
 }
 
 @Preview
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
-fun LoadingBarPreview() {
+private fun LoadingBarPreview() {
     LoadingBar(
         percentage = 0.5f
     )

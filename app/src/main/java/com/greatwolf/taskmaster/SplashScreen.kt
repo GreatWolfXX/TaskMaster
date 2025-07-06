@@ -17,9 +17,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -27,6 +24,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.greatwolf.taskmaster.navigation.Route
 import com.greatwolf.ui.theme.BodyXSmallTextStyleNormal
 import com.greatwolf.ui.theme.Dark
 import com.greatwolf.ui.theme.Light
@@ -35,24 +34,31 @@ import com.greatwolf.ui.theme.Neutral50
 import com.greatwolf.ui.theme.Neutral500
 import com.greatwolf.ui.theme.Neutral700
 import com.greatwolf.ui.theme.Typography
-import kotlinx.coroutines.delay
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SplashScreen(
-    navigate: () -> Unit
+    vm: SplashViewModel = koinViewModel(),
+    navigate: (Route) -> Unit
 ) {
-    var targetValue by remember { mutableFloatStateOf(0f) }
+    val state by vm.state.collectAsStateWithLifecycle()
+    val event by vm.event.collectAsStateWithLifecycle(SplashEvent.Idle)
 
     val percentage by animateFloatAsState(
-        targetValue = targetValue,
+        targetValue = state.progress,
         animationSpec = tween(durationMillis = 3000)
     )
 
-    LaunchedEffect(Unit) {
-        targetValue = 1f
-        delay(3000L)
-        navigate()
+    LaunchedEffect(event) {
+        when (event) {
+            SplashEvent.Idle -> {}
+
+            SplashEvent.Finish -> {
+                navigate(state.destination)
+            }
+        }
     }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -109,13 +115,11 @@ private fun LoadingBarWithText(
     }
 }
 
-
-
 @Preview
 @Preview(
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-fun SplashScreenPreview() {
+private fun SplashScreenPreview() {
     SplashScreen { }
 }

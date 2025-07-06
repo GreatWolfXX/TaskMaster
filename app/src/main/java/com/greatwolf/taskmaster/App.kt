@@ -1,6 +1,7 @@
 package com.greatwolf.taskmaster
 
 import android.app.Application
+import com.greatwolf.auth.di.authModule
 import com.greatwolf.data.di.dataModule
 import com.greatwolf.domain.di.domainModule
 import com.greatwolf.onboarding.di.onboardingModule
@@ -17,7 +18,8 @@ class App : Application() {
                 appModule,
                 dataModule,
                 domainModule,
-                onboardingModule
+                onboardingModule,
+                authModule
             )
         }
     }

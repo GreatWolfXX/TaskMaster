@@ -1,5 +1,6 @@
 import com.android.build.api.dsl.ApplicationExtension
 import com.greatwolf.convention.configureAndroidCompose
+import com.greatwolf.convention.configureBuildConfig
 import com.greatwolf.convention.configureKotlinAndroid
 import com.greatwolf.convention.libs
 import org.gradle.api.Plugin
@@ -18,6 +19,7 @@ class ApplicationComposeConventionPlugin : Plugin<Project> {
             extensions.configure<ApplicationExtension> {
                 configureKotlinAndroid(this)
                 configureAndroidCompose(this)
+                configureBuildConfig(this)
                 defaultConfig.targetSdk = libs.findVersion("targetSdk").get().toString().toInt()
             }
         }

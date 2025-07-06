@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId = "com.greatwolf.taskmaster"
         versionCode = 1
-        versionName = "0.4.2"
+        versionName = "0.5.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -35,14 +35,7 @@ dependencies {
     implementation(projects.core.ui)
 
     implementation(projects.feature.onboarding)
-
-    //Tests
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(projects.feature.auth)
 
     // Koin
     implementation(libs.koin.androidx.compose)

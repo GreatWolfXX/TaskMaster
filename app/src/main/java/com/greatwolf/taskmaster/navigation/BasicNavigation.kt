@@ -1,10 +1,13 @@
 package com.greatwolf.taskmaster.navigation
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
+import com.greatwolf.auth.create.SignUpScreen
 import com.greatwolf.onboarding.OnboardingScreen
 import com.greatwolf.taskmaster.SplashScreen
 
@@ -18,8 +21,8 @@ fun BasicNavigation() {
         entryProvider = entryProvider {
             entry<Route.Splash> {
                 SplashScreen(
-                    navigate = {
-                        backStack.add(Route.Onboarding)
+                    navigate = { route ->
+                        backStack.add(route)
                         backStack.remove(Route.Splash)
                     }
                 )
@@ -27,10 +30,15 @@ fun BasicNavigation() {
 
             entry<Route.Onboarding> {
                 OnboardingScreen(
-                    navigateToHome = {
-
+                    navigateToSignUp = {
+                        backStack.add(Route.SignUp)
+                        backStack.remove(Route.Onboarding)
                     }
                 )
+            }
+
+            entry(Route.SignUp) {
+                SignUpScreen()
             }
         }
     )

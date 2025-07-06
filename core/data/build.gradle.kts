@@ -2,6 +2,7 @@ import com.greatwolf.convention.implementation
 
 plugins {
     alias(libs.plugins.taskmaster.library)
+    alias(libs.plugins.taskmaster.supabase)
 }
 
 android {
@@ -9,9 +10,13 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.common)
     implementation(projects.core.datastore)
     implementation(projects.core.domain)
 //    implementation(projects.core.models)
+
+    // DataStore
+    implementation(libs.datastore.preferences)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.core)

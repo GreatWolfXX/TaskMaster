@@ -180,7 +180,7 @@ fun CustomButton(
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-fun CustomButtonPreview() {
+private fun CustomButtonPreview() {
     CustomButton(
         type = CustomButtonType.PRIMARY,
         size = CustomButtonSize.MEDIUM,
