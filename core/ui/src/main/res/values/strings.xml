@@ -1,8 +1,8 @@
 <resources>
-    <string name="err_no_valid">Email address entered wrong!</string>
-    <string name="err_too_short">Password is too short!</string>
-    <string name="err_no_uppercase">Password must contain at least one uppercase letter!</string>
-    <string name="err_no_letter">Password must contain at least one letter!</string>
-    <string name="err_no_digit">Password must contain at least one digit!</string>
-    <string name="err_repeat_password_no_match">Passwords do not match!</string>
+    <string name="err_no_valid">Incorrect email format</string>
+    <string name="err_too_short">Password is too short</string>
+    <string name="err_no_uppercase">Password must contain at least one uppercase letter</string>
+    <string name="err_no_letter">Password must contain at least one letter</string>
+    <string name="err_no_digit">Password must contain at least one digit</string>
+    <string name="err_repeat_password_no_match">The password is not the same</string>
 </resources>

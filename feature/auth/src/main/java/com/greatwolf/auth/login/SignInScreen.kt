@@ -1,7 +1,8 @@
-package com.greatwolf.auth.create
+package com.greatwolf.auth.login
 
 import android.content.res.Configuration
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -39,7 +40,6 @@ import com.greatwolf.ui.component.CustomCheckbox
 import com.greatwolf.ui.component.CustomTextField
 import com.greatwolf.ui.component.CustomTextFieldType
 import com.greatwolf.ui.component.DividerWithText
-import com.greatwolf.ui.constant.PRIVACY_TAG
 import com.greatwolf.ui.constant.SIGN_IN_TAG
 import com.greatwolf.ui.constant.TERMS_TAG
 import com.greatwolf.ui.provider.LocalSnackbarHostState
@@ -56,16 +56,16 @@ import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinApplicationPreview
 
 @Composable
-fun SignUpScreen(
-    vm: SignUpViewModel = koinViewModel()
+fun SignInScreen(
+    vm: SignInViewModel = koinViewModel()
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
-    val event by vm.event.collectAsStateWithLifecycle(SignUpEvent.Idle)
+    val event by vm.event.collectAsStateWithLifecycle(SignInEvent.Idle)
 
     LaunchedEffect(event) {
         when (event) {
-            SignUpEvent.Idle -> {}
-            SignUpEvent.Submit -> {
+            SignInEvent.Idle -> {}
+            SignInEvent.Submit -> {
 
             }
         }
@@ -80,7 +80,7 @@ fun SignUpScreen(
         }
     }
 
-    SignUpContent(
+    SignInContent(
         state = state,
         onIntent = { intent ->
             vm.onIntent(intent)
@@ -89,9 +89,9 @@ fun SignUpScreen(
 }
 
 @Composable
-private fun SignUpContent(
-    state: SignUpUiState,
-    onIntent: (SignUpIntent) -> Unit
+private fun SignInContent(
+    state: SignInUiState,
+    onIntent: (SignInIntent) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -102,14 +102,14 @@ private fun SignUpContent(
         Spacer(modifier = Modifier.size(64.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.sign_up_title),
+            text = stringResource(R.string.sign_in_title),
             style = Typography.displaySmall,
             color = if (isSystemInDarkTheme()) Neutral0 else Neutral700
         )
         Spacer(modifier = Modifier.size(8.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.sign_up_desc),
+            text = stringResource(R.string.sign_in_desc),
             style = Typography.labelSmall,
             color = if (isSystemInDarkTheme()) Neutral200 else Neutral500
         )
@@ -119,7 +119,7 @@ private fun SignUpContent(
             placeholder = stringResource(R.string.email),
             value = state.email,
             onValueChanged = { value ->
-                onIntent(SignUpIntent.EnterEmail(value))
+                onIntent(SignInIntent.EnterEmail(value))
             },
             isError = state.emailError != null,
             hint = state.emailError?.asString().orEmpty(),
@@ -132,32 +132,19 @@ private fun SignUpContent(
             placeholder = stringResource(R.string.password),
             value = state.password,
             onValueChanged = { value ->
-                onIntent(SignUpIntent.EnterPassword(value))
+                onIntent(SignInIntent.EnterPassword(value))
             },
             isError = state.passwordError != null,
             hint = state.passwordError?.asString().orEmpty(),
             imeAction = ImeAction.Next
         )
         Spacer(modifier = Modifier.size(16.dp))
-        CustomTextField(
-            type = CustomTextFieldType.PASSWORD,
-            label = stringResource(R.string.confirm_password),
-            placeholder = stringResource(R.string.confirm_password),
-            value = state.passwordRepeat,
-            onValueChanged = { value ->
-                onIntent(SignUpIntent.EnterRepeatPassword(value))
-            },
-            isError = state.passwordRepeatError != null,
-            hint = state.passwordRepeatError?.asString().orEmpty()
-        )
-        Spacer(modifier = Modifier.size(16.dp))
-        TermsAndPrivacyBlock(
-            checked = state.isAgreeTerms,
+        IsRememberAndForgotPasswordBlock(
+            checked = state.isRememberMe,
             onCheckedChange = { value ->
-                onIntent(SignUpIntent.ChangeIsAgreeTerms(value))
+                onIntent(SignInIntent.ChangeIsRememberMe(value))
             },
-            onClickTerms = { },
-            onClickPrivacy = { }
+            onClickForgotPassword = { },
         )
         Spacer(modifier = Modifier.size(24.dp))
         CustomButton(
@@ -166,11 +153,11 @@ private fun SignUpContent(
             size = CustomButtonSize.SMALL,
             text = stringResource(R.string.sign_up)
         ) {
-            onIntent(SignUpIntent.Submit)
+            onIntent(SignInIntent.Submit)
         }
         Spacer(modifier = Modifier.size(40.dp))
         DividerWithText(
-            text = stringResource(R.string.or_sign_up_with)
+            text = stringResource(R.string.or_sign_in_with)
         )
         Spacer(modifier = Modifier.size(24.dp))
         AuthVariantsButtons(
@@ -179,22 +166,19 @@ private fun SignUpContent(
             onClickFacebook = { }
         )
         Spacer(modifier = Modifier.size(32.dp))
-        AlreadyHaveAccountBlock { }
+        DontHaveAccountBlock { }
     }
 }
 
 @Composable
-private fun TermsAndPrivacyBlock(
+private fun IsRememberAndForgotPasswordBlock(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
-    onClickTerms: () -> Unit,
-    onClickPrivacy: () -> Unit
+    onClickForgotPassword: () -> Unit
 ) {
     val clickableTextColor = if (isSystemInDarkTheme()) Primary300 else Primary200
 
     val annotatedString = buildAnnotatedString {
-        append(stringResource(R.string.agree_to))
-        append(" ")
         withLink(
             link = LinkAnnotation.Clickable(
                 tag = TERMS_TAG,
@@ -202,37 +186,30 @@ private fun TermsAndPrivacyBlock(
                     style = SpanStyle(color = clickableTextColor),
                     pressedStyle = SpanStyle(background = Primary600)
                 ),
-                linkInteractionListener = { onClickTerms() }
+                linkInteractionListener = { onClickForgotPassword() }
             )
         ) {
-            append(stringResource(R.string.terms_and_conditionts))
-        }
-        append(" ")
-        append(stringResource(R.string.and))
-        append(" ")
-        withLink(
-            link = LinkAnnotation.Clickable(
-                tag = PRIVACY_TAG,
-                styles = TextLinkStyles(
-                    style = SpanStyle(color = clickableTextColor),
-                    pressedStyle = SpanStyle(background = Primary600)
-                ),
-                linkInteractionListener = { onClickPrivacy() }
-            )
-        ) {
-            append(stringResource(R.string.privacy_policy))
+            append(stringResource(R.string.forgot_password))
         }
     }
-
     Row(
         modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        CustomCheckbox(
-            checked = checked,
-            onCheckedChange = onCheckedChange
-        )
-        Spacer(modifier = Modifier.size(8.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            CustomCheckbox(
+                checked = checked,
+                onCheckedChange = onCheckedChange
+            )
+            Spacer(modifier = Modifier.size(8.dp))
+            Text(
+                text = stringResource(R.string.remember_me),
+                style = BodyXSmallTextStyleNormal,
+                color = if (isSystemInDarkTheme()) Neutral200 else Neutral500
+            )
+        }
         Text(
             text = annotatedString,
             style = BodyXSmallTextStyleNormal,
@@ -242,13 +219,13 @@ private fun TermsAndPrivacyBlock(
 }
 
 @Composable
-private fun AlreadyHaveAccountBlock(
+private fun DontHaveAccountBlock(
     onClick: () -> Unit
 ) {
     val clickableTextColor = if (isSystemInDarkTheme()) Primary300 else Primary200
 
     val annotatedString = buildAnnotatedString {
-        append(stringResource(R.string.already_have_account))
+        append(stringResource(R.string.dont_have_account))
         append(" ")
         withLink(
             link = LinkAnnotation.Clickable(
@@ -263,7 +240,7 @@ private fun AlreadyHaveAccountBlock(
                 linkInteractionListener = { onClick() }
             )
         ) {
-            append(stringResource(R.string.sign_in))
+            append(stringResource(R.string.sign_up))
         }
     }
 
@@ -279,7 +256,7 @@ private fun AlreadyHaveAccountBlock(
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-private fun SignUpScreenPreview() {
+private fun SignInScreenPreview() {
     val snackbarHostState = remember { SnackbarHostState() }
 
     CompositionLocalProvider(
@@ -288,7 +265,7 @@ private fun SignUpScreenPreview() {
         )
     ) {
         KoinApplicationPreview(application = { modules(authModule) }) {
-            SignUpScreen()
+            SignInScreen()
         }
     }
 }
