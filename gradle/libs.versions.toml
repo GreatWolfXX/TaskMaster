@@ -41,6 +41,8 @@ mockk = "1.14.4"
 
 kotlinxCoroutinesTest = "1.10.2"
 
+ohteepee = "1.1.0"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
@@ -98,6 +100,9 @@ mockk-android = { group = "io.mockk", name = "mockk-android", version.ref = "moc
 
 # Kotlin Coroutines Test
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+
+# OhTeePee
+ohteepee = { group = "com.github.composeuisuite", name = "ohteepee", version.ref = "ohteepee" }
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
