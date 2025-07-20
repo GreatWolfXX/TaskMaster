@@ -199,7 +199,10 @@ private fun TermsAndPrivacyBlock(
             link = LinkAnnotation.Clickable(
                 tag = TERMS_TAG,
                 styles = TextLinkStyles(
-                    style = SpanStyle(color = clickableTextColor),
+                    style = SpanStyle(
+                        fontWeight = Typography.labelMedium.fontWeight,
+                        color = clickableTextColor
+                    ),
                     pressedStyle = SpanStyle(background = Primary600)
                 ),
                 linkInteractionListener = { onClickTerms() }
