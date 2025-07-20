@@ -3,6 +3,8 @@
     <string name="sign_up_desc">Get ready to make your days more organized and planned. Let\'s start now!</string>
     <string name="sign_in_title">Sign In</string>
     <string name="sign_in_desc">We\'re thrilled to welcome you back! Curious to catch up on all your latest adventures since your last login.</string>
+    <string name="verification_title">You\'re almost there!</string>
+    <string name="verification_desc">You only have to enter an OTP code we sent via Email to your registered email</string>
     <string name="your_email">Your Email</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -19,6 +21,11 @@
     <string name="dont_have_account">Don\’t have an account?</string>
     <string name="remember_me">Remember Me</string>
     <string name="forgot_password">Forgot password?</string>
+    <string name="otp_verification">OTP verification code</string>
+    <string name="didnt_receive_otp">If you didn\'t receive a OTP?</string>
+    <string name="resend">Resend</string>
+    <string name="verification">Verification</string>
+    <string name="long_dash">—</string>
 
     <string name="snackbar_fill_fields">Please fill out all required fields!</string>
 </resources>
