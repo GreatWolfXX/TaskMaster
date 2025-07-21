@@ -1,5 +1,3 @@
-import com.greatwolf.convention.implementation
-
 plugins {
     alias(libs.plugins.taskmaster.library.compose)
 }
@@ -13,4 +11,7 @@ dependencies {
 
     // Google Fonts
     implementation(libs.androidx.ui.text.google.fonts)
+
+    // OhTeePee
+    implementation(libs.ohteepee)
 }
