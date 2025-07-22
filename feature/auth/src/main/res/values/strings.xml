@@ -21,11 +21,7 @@
     <string name="dont_have_account">Don\’t have an account?</string>
     <string name="remember_me">Remember Me</string>
     <string name="forgot_password">Forgot password?</string>
-    <string name="otp_verification">OTP verification code</string>
-    <string name="didnt_receive_otp">If you didn\'t receive a OTP?</string>
-    <string name="resend">Resend</string>
     <string name="verification">Verification</string>
-    <string name="long_dash">—</string>
 
     <string name="snackbar_fill_fields">Please fill out all required fields!</string>
 </resources>

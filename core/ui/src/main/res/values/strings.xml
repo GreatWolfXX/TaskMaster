@@ -1,4 +1,12 @@
 <resources>
+    <string name="otp_verification">OTP verification code</string>
+    <string name="didnt_receive_otp">If you didn\'t receive a OTP?</string>
+    <string name="resend">Resend</string>
+    <string name="long_dash">—</string>
+    <string name="resend_otp">Resend OTP in %1$ds</string>
+    <string name="otp_code_is_wrong">Your code is wrong, enter the OTP code as sent</string>
+    <string name="code_sent">Code has been sent</string>
+
     <string name="err_no_valid">Incorrect email format</string>
     <string name="err_too_short">Password is too short</string>
     <string name="err_no_uppercase">Password must contain at least one uppercase letter</string>
