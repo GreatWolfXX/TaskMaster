@@ -101,12 +101,14 @@ fun CustomTextField(
     Column(
         modifier = Modifier.animateContentSize()
     ) {
-        Text(
-            text = label,
-            style = Typography.labelMedium,
-            color = if (isSystemInDarkTheme()) Neutral100 else Neutral700
-        )
-        Spacer(modifier = Modifier.size(6.dp))
+        if(label.isNotBlank()) {
+            Text(
+                text = label,
+                style = Typography.labelMedium,
+                color = if (isSystemInDarkTheme()) Neutral100 else Neutral700
+            )
+            Spacer(modifier = Modifier.size(6.dp))
+        }
         Box(
             modifier = Modifier
                 .border(

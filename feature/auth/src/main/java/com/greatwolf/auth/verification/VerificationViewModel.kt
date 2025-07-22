@@ -47,7 +47,7 @@ class VerificationViewModel(
     fun onIntent(intent: VerificationIntent) {
         when (intent) {
             is VerificationIntent.EnterOtp -> {
-                _state.update { it.copy(email = intent.otp) }
+                _state.update { it.copy(otpValue = intent.otp) }
             }
 
             VerificationIntent.Resend -> {
