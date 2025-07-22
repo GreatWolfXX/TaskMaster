@@ -5,6 +5,8 @@
     <string name="sign_in_desc">We\'re thrilled to welcome you back! Curious to catch up on all your latest adventures since your last login.</string>
     <string name="verification_title">You\'re almost there!</string>
     <string name="verification_desc">You only have to enter an OTP code we sent via Email to your registered email</string>
+    <string name="password_reset_verification_title">You\'re on the brink of completion!</string>
+    <string name="password_reset_verification_desc">To finalize the process, simply input the OTP code we\'ve dispatched to your registered email address</string>
     <string name="your_email">Your Email</string>
     <string name="email">Email</string>
     <string name="password">Password</string>

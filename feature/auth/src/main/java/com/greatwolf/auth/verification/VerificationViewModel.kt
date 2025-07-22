@@ -14,12 +14,14 @@ import kotlinx.coroutines.flow.update
 data class VerificationUiState(
     val email: String = "",
     val otpValue: String = "",
+    val otpError: UiText? = null,
     val snackbarMessage: UiText? = null,
     val loading: Boolean = false
 )
 
 sealed class VerificationIntent {
     data class EnterOtp(val otp: String) : VerificationIntent()
+    data object Resend : VerificationIntent()
     data object Submit : VerificationIntent()
 }
 
@@ -46,6 +48,10 @@ class VerificationViewModel(
         when (intent) {
             is VerificationIntent.EnterOtp -> {
                 _state.update { it.copy(email = intent.otp) }
+            }
+
+            VerificationIntent.Resend -> {
+
             }
 
             VerificationIntent.Submit -> {
