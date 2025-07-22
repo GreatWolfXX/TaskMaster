@@ -1,5 +1,3 @@
-import com.greatwolf.convention.implementation
-
 plugins {
     alias(libs.plugins.taskmaster.library)
     alias(libs.plugins.taskmaster.supabase)

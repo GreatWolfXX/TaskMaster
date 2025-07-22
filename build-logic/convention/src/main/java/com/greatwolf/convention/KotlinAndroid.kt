@@ -24,6 +24,13 @@ internal fun Project.configureKotlinAndroid(
             targetCompatibility = projectJavaVersion
         }
 
+        packaging {
+            resources {
+                excludes += "META-INF/LICENSE.md"
+                excludes += "META-INF/LICENSE-notice.md"
+            }
+        }
+
         dependencies {
             //Test
             testImplementation(libs.findLibrary("junit").get())
