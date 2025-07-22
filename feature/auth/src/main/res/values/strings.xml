@@ -24,6 +24,11 @@
     <string name="remember_me">Remember Me</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="verification">Verification</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="insert_email">Insert your email and we will send you a code.</string>
+    <string name="insert_phone">Insert your phone number and we will send you a code.</string>
+    <string name="send_code">Send Code</string>
+    <string name="try_another_way">Try another way</string>
 
     <string name="snackbar_fill_fields">Please fill out all required fields!</string>
 </resources>
