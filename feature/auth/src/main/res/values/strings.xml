@@ -29,6 +29,7 @@
     <string name="insert_phone">Insert your phone number and we will send you a code.</string>
     <string name="send_code">Send Code</string>
     <string name="try_another_way">Try another way</string>
+    <string name="go_to_homepage">Go to Homepage</string>
 
     <string name="snackbar_fill_fields">Please fill out all required fields!</string>
 </resources>
