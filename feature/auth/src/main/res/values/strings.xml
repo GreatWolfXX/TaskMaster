@@ -30,6 +30,8 @@
     <string name="send_code">Send Code</string>
     <string name="try_another_way">Try another way</string>
     <string name="go_to_homepage">Go to Homepage</string>
+    <string name="create_new_password">Create new password</string>
+    <string name="create_new_password_desc">Create a password that surpasses the ones you\'ve used before. Make it stronger and more secure to enhance your account\'s protection.</string>
 
     <string name="snackbar_fill_fields">Please fill out all required fields!</string>
 </resources>
