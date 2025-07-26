@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">Task Master</string>
     <string name="otp_verification">OTP verification code</string>
     <string name="didnt_receive_otp">If you didn\'t receive a OTP?</string>
     <string name="resend">Resend</string>
