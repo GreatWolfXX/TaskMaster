@@ -49,7 +49,6 @@ class ResetPasswordViewModel(
                 _state.update { it.copy(email = intent.email) }
             }
 
-
             ResetPasswordIntent.Submit -> {
 
             }
