@@ -11,6 +11,7 @@ import org.koin.dsl.module
 
 val dataModule = module {
     includes(dataStoreModule)
+
     single<SettingsRepository> {
         SettingsRepositoryImpl(get())
     }
@@ -20,7 +21,7 @@ val dataModule = module {
 
         createSupabaseClient(
             supabaseUrl = config.supabaseUrl,
-            supabaseKey = config.supabaseUrl
+            supabaseKey = config.supabaseKey
         ) {
             install(Auth)
         }
