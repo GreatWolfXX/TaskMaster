@@ -110,6 +110,7 @@ private fun SignUpContent(
         )
         Spacer(modifier = Modifier.size(40.dp))
         CustomTextField(
+            type = CustomTextFieldType.EMAIL,
             label = stringResource(R.string.your_email),
             placeholder = stringResource(R.string.email),
             value = state.email,

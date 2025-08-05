@@ -56,6 +56,7 @@ import com.greatwolf.ui.theme.Typography
 enum class CustomTextFieldType {
     STANDARD,
     PASSWORD,
+    EMAIL,
 }
 
 @Composable
@@ -79,6 +80,7 @@ fun CustomTextField(
 
     val typeKeyboardOptions = when (type) {
         CustomTextFieldType.PASSWORD -> KeyboardOptions(keyboardType = KeyboardType.Password)
+        CustomTextFieldType.EMAIL -> KeyboardOptions(keyboardType = KeyboardType.Email)
         else -> KeyboardOptions.Default
     }
     val keyboardOptions = typeKeyboardOptions.copy(imeAction = imeAction)
