@@ -11,13 +11,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -31,7 +28,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.greatwolf.auth.R
-import com.greatwolf.auth.di.authModule
 import com.greatwolf.ui.component.AuthVariantsButtons
 import com.greatwolf.ui.component.CustomButton
 import com.greatwolf.ui.component.CustomButtonSize
@@ -53,7 +49,6 @@ import com.greatwolf.ui.theme.Primary300
 import com.greatwolf.ui.theme.Primary600
 import com.greatwolf.ui.theme.Typography
 import org.koin.androidx.compose.koinViewModel
-import org.koin.compose.KoinApplicationPreview
 
 @Composable
 fun SignInScreen(
@@ -260,15 +255,9 @@ private fun DontHaveAccountBlock(
 )
 @Composable
 private fun SignInScreenPreview() {
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    CompositionLocalProvider(
-        values = arrayOf(
-            LocalSnackbarHostState provides snackbarHostState
-        )
-    ) {
-        KoinApplicationPreview(application = { modules(authModule) }) {
-            SignInScreen()
-        }
-    }
+    val state = SignInUiState()
+    SignInContent(
+        state = state,
+        onIntent = { }
+    )
 }
