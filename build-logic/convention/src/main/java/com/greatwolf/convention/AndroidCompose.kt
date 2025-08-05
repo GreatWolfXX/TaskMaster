@@ -24,6 +24,9 @@ internal fun Project.configureAndroidCompose(
             implementation(libs.findLibrary("androidx-ui-tooling-preview").get())
             implementation(libs.findLibrary("androidx-material3").get())
 
+            // Coil
+            implementation(libs.findLibrary("coil-compose").get())
+
             //Test
             androidTestImplementation(libs.findLibrary("androidx-junit").get())
             androidTestImplementation(platform(bom))

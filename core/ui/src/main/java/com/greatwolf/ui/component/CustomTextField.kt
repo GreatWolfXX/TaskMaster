@@ -63,6 +63,7 @@ fun CustomTextField(
     modifier: Modifier = Modifier,
     type: CustomTextFieldType = CustomTextFieldType.STANDARD,
     leadingIcon: ImageVector? = null,
+    trailingIcon: ImageVector? = null,
     label: String = "",
     placeholder: String = "",
     hint: String = "",
@@ -144,6 +145,7 @@ fun CustomTextField(
                 CustomTextFieldDecoration(
                     type = type,
                     leadingIcon = leadingIcon,
+                    trailingIcon = trailingIcon,
                     placeholder = placeholder,
                     showPlaceholder = !isFocused && value.isEmpty(),
                     passwordVisibility = passwordVisibility,
@@ -166,6 +168,7 @@ fun CustomTextField(
 private fun CustomTextFieldDecoration(
     type: CustomTextFieldType,
     leadingIcon: ImageVector? = null,
+    trailingIcon: ImageVector? = null,
     placeholder: String,
     showPlaceholder: Boolean,
     passwordVisibility: Boolean,
@@ -215,6 +218,15 @@ private fun CustomTextFieldDecoration(
                     .clip(CircleShape)
                     .clickable(onClick = onPasswordVisibilityClick),
                 imageVector = passwordVisibilityIcon,
+                tint = if (isSystemInDarkTheme()) Neutral300 else Neutral400,
+                contentDescription = null
+            )
+        }
+        if(trailingIcon != null) {
+            Icon(
+                modifier = Modifier
+                    .size(24.dp),
+                imageVector = trailingIcon,
                 tint = if (isSystemInDarkTheme()) Neutral300 else Neutral400,
                 contentDescription = null
             )

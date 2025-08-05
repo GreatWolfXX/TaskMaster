@@ -1,4 +1,4 @@
-package com.greatwolf.auth.reset
+package com.greatwolf.auth.password
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
