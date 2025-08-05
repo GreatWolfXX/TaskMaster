@@ -45,6 +45,8 @@ kotlinxCoroutinesTest = "1.10.2"
 
 ohteepee = "1.1.0"
 
+napier = "2.7.1"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
@@ -108,6 +110,9 @@ kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 
 # OhTeePee
 ohteepee = { group = "com.github.composeuisuite", name = "ohteepee", version.ref = "ohteepee" }
+
+# Napier
+napier = { group = "io.github.aakira", name = "napier", version.ref = "napier"}
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
