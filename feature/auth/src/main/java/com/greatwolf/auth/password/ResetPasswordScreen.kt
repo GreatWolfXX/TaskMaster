@@ -1,4 +1,4 @@
-package com.greatwolf.auth.reset
+package com.greatwolf.auth.password
 
 import android.content.res.Configuration
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -30,7 +29,6 @@ import com.greatwolf.ui.component.CustomButtonSize
 import com.greatwolf.ui.component.CustomButtonType
 import com.greatwolf.ui.component.CustomIconButton
 import com.greatwolf.ui.component.CustomTextField
-import com.greatwolf.ui.component.CustomTextFieldType
 import com.greatwolf.ui.provider.LocalSnackbarHostState
 import com.greatwolf.ui.theme.Neutral200
 import com.greatwolf.ui.theme.Neutral50
@@ -40,16 +38,16 @@ import com.greatwolf.ui.theme.Typography
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun NewPasswordScreen(
-    vm: NewPasswordViewModel = koinViewModel()
+fun ResetPasswordScreen(
+    vm: ResetPasswordViewModel = koinViewModel()
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
-    val event by vm.event.collectAsStateWithLifecycle(NewPasswordEvent.Idle)
+    val event by vm.event.collectAsStateWithLifecycle(ResetPasswordEvent.Idle)
 
     LaunchedEffect(event) {
         when (event) {
-            NewPasswordEvent.Idle -> {}
-            NewPasswordEvent.Submit -> {
+            ResetPasswordEvent.Idle -> {}
+            ResetPasswordEvent.Submit -> {
 
             }
         }
@@ -64,7 +62,7 @@ fun NewPasswordScreen(
         }
     }
 
-    NewPasswordContent(
+    ResetPasswordContent(
         state = state,
         onIntent = { intent ->
             vm.onIntent(intent)
@@ -73,10 +71,14 @@ fun NewPasswordScreen(
 }
 
 @Composable
-private fun NewPasswordContent(
-    state: NewPasswordUiState,
-    onIntent: (NewPasswordIntent) -> Unit
+private fun ResetPasswordContent(
+    state: ResetPasswordUiState,
+    onIntent: (ResetPasswordIntent) -> Unit
 ) {
+    val desc =
+        if (state.isPhoneWay) stringResource(R.string.insert_phone) else stringResource(
+            R.string.insert_email
+        )
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -92,49 +94,48 @@ private fun NewPasswordContent(
         Spacer(modifier = Modifier.size(20.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.create_new_password),
+            text = stringResource(R.string.reset_password),
             style = Typography.headlineMedium,
             color = if (isSystemInDarkTheme()) Neutral50 else Neutral700
         )
         Spacer(modifier = Modifier.size(8.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.create_new_password_desc),
+            text = desc,
             style = Typography.labelSmall,
             color = if (isSystemInDarkTheme()) Neutral200 else Neutral500
         )
-        Spacer(modifier = Modifier.size(24.dp))
-        CustomTextField(
-            type = CustomTextFieldType.PASSWORD,
-            placeholder = stringResource(R.string.password),
-            value = state.password,
-            onValueChanged = { value ->
-                onIntent(NewPasswordIntent.EnterPassword(value))
-            },
-            isError = state.passwordError != null,
-            hint = state.passwordError?.asString().orEmpty(),
-            imeAction = ImeAction.Next
-        )
-        Spacer(modifier = Modifier.size(16.dp))
-        CustomTextField(
-            type = CustomTextFieldType.PASSWORD,
-            placeholder = stringResource(R.string.confirm_password),
-            value = state.passwordRepeat,
-            onValueChanged = { value ->
-                onIntent(NewPasswordIntent.EnterRepeatPassword(value))
-            },
-            isError = state.passwordRepeatError != null,
-            hint = state.passwordRepeatError?.asString().orEmpty()
-        )
+        Spacer(modifier = Modifier.size(12.dp))
+        if (!state.isPhoneWay) {
+            CustomTextField(
+                placeholder = stringResource(R.string.email),
+                value = state.email,
+                onValueChanged = { value ->
+                    onIntent(ResetPasswordIntent.EnterEmail(value))
+                },
+                isError = state.emailError != null,
+                hint = state.emailError?.asString().orEmpty()
+            )
+        } else {
+
+        }
         Spacer(modifier = Modifier.size(24.dp))
         CustomButton(
             modifier = Modifier.fillMaxWidth(),
             type = CustomButtonType.PRIMARY,
             size = CustomButtonSize.SMALL,
-            text = stringResource(R.string.reset_password)
+            text = stringResource(R.string.send_code)
         ) {
-            onIntent(NewPasswordIntent.Submit)
+            onIntent(ResetPasswordIntent.Submit)
         }
+//        Spacer(modifier = Modifier.size(40.dp))
+//        Text(
+//            text = stringResource(R.string.try_another_way),
+//            style = Typography.labelSmall.copy(
+//                textDecoration = TextDecoration.Underline
+//            ),
+//            color = if (isSystemInDarkTheme()) Primary200 else Primary300
+//        )
     }
 }
 
@@ -164,9 +165,9 @@ private fun TopMenu(
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-private fun NewPasswordScreenPreview() {
-    val state = NewPasswordUiState()
-    NewPasswordContent(
+private fun ResetPasswordScreenPreview() {
+    val state = ResetPasswordUiState()
+    ResetPasswordContent(
         state = state,
         onIntent = {}
     )
