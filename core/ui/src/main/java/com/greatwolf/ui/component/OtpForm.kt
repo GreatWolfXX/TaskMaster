@@ -138,8 +138,8 @@ fun OtpForm(
         activeCellConfig = activeCellConfig,
         errorCellConfig = errorCellConfig,
         cellModifier = Modifier
-            .height(60.dp)
-            .width(68.dp),
+            .height(48.dp)
+            .width(56.dp),
         placeHolder = stringResource(R.string.long_dash)
     )
 
