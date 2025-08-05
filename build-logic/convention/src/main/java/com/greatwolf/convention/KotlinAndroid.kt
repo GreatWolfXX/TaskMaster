@@ -36,6 +36,9 @@ internal fun Project.configureKotlinAndroid(
             testImplementation(libs.findLibrary("junit").get())
             testImplementation(libs.findLibrary("mockk").get())
             testImplementation(libs.findLibrary("kotlinx-coroutines-test").get())
+
+            // Napier
+            implementation(libs.findLibrary("napier").get())
         }
     }
 
