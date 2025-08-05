@@ -8,8 +8,11 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.greatwolf.auth.create.SignUpScreen
+import com.greatwolf.auth.verification.VerificationScreen
 import com.greatwolf.onboarding.OnboardingScreen
 import com.greatwolf.taskmaster.SplashScreen
+import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun BasicNavigation() {
@@ -37,8 +40,20 @@ fun BasicNavigation() {
                 )
             }
 
-            entry(Route.SignUp) {
-                SignUpScreen()
+            entry<Route.SignUp> {
+                SignUpScreen(
+                    navigateVerification = { email ->
+                        backStack.add(Route.Verification(email))
+                    }
+                )
+            }
+
+            entry<Route.Verification> { key ->
+                VerificationScreen(
+                    vm = koinViewModel {
+                        parametersOf(key.email)
+                    }
+                )
             }
         }
     )

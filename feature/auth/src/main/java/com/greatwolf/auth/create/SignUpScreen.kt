@@ -52,7 +52,8 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SignUpScreen(
-    vm: SignUpViewModel = koinViewModel()
+    vm: SignUpViewModel = koinViewModel(),
+    navigateVerification: (String) -> Unit
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
     val event by vm.event.collectAsStateWithLifecycle(SignUpEvent.Idle)
@@ -61,7 +62,7 @@ fun SignUpScreen(
         when (event) {
             SignUpEvent.Idle -> {}
             SignUpEvent.Submit -> {
-
+                navigateVerification(state.email)
             }
         }
     }

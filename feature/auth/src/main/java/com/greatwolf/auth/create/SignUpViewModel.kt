@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.greatwolf.auth.R
 import com.greatwolf.common.Error
 import com.greatwolf.common.Result
+import com.greatwolf.common.asResult
+import com.greatwolf.domain.usecase.SignUpUseCase
 import com.greatwolf.domain.usecase.ValidatePasswordUseCase
 import com.greatwolf.ui.util.UiText
 import com.greatwolf.ui.util.asUiText
@@ -47,7 +49,8 @@ sealed class SignUpEvent {
 }
 
 class SignUpViewModel(
-    private val validatePasswordUseCase: ValidatePasswordUseCase
+    private val validatePasswordUseCase: ValidatePasswordUseCase,
+    private val signUpUseCase: SignUpUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<SignUpUiState>(SignUpUiState())
@@ -90,11 +93,11 @@ class SignUpViewModel(
                     _state.value.emailError,
                     _state.value.passwordError,
                     _state.value.passwordRepeatError
-                ).any { it == null }
+                ).any { it != null }
 
                 viewModelScope.launch {
-                    if (!hasError) {
-                        _event.send(SignUpEvent.Submit)
+                    if (!hasError && _state.value.isAgreeTerms) {
+                        signUp()
                     } else {
                         _state.update {
                             it.copy(
@@ -140,5 +143,22 @@ class SignUpViewModel(
         } else {
             _state.update { it.copy(passwordRepeatError = null) }
         }
+    }
+
+    private fun signUp() {
+        signUpUseCase.invoke(
+            email = _state.value.email,
+            password = _state.value.password
+        )
+            .asResult()
+            .map { result ->
+                when (result) {
+                    is Result.Error -> {}
+                    Result.Loading -> {}
+                    is Result.Success -> {
+                        _event.send(SignUpEvent.Submit)
+                    }
+                }
+            }.launchIn(viewModelScope)
     }
 }
