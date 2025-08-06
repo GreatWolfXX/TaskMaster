@@ -19,7 +19,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -43,7 +42,8 @@ fun SuccessScreen(
     vm: SuccessViewModel = koinViewModel(),
     title: String,
     desc: String,
-    goToHome: () -> Unit
+    btnText: String,
+    navigate: () -> Unit
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
     val event by vm.event.collectAsStateWithLifecycle(SuccessEvent.Idle)
@@ -52,7 +52,7 @@ fun SuccessScreen(
         when (event) {
             SuccessEvent.Idle -> {}
             SuccessEvent.Submit -> {
-                goToHome()
+                navigate()
             }
         }
     }
@@ -70,6 +70,7 @@ fun SuccessScreen(
         state = state,
         title = title,
         desc = desc,
+        btnText = btnText,
         onIntent = { intent ->
             vm.onIntent(intent)
         }
@@ -81,6 +82,7 @@ private fun SuccessContent(
     state: SuccessUiState,
     title: String,
     desc: String,
+    btnText: String,
     onIntent: (SuccessIntent) -> Unit
 ) {
     Column(
@@ -100,7 +102,7 @@ private fun SuccessContent(
             modifier = Modifier.fillMaxWidth(),
             type = CustomButtonType.PRIMARY,
             size = CustomButtonSize.SMALL,
-            text = stringResource(R.string.go_to_homepage)
+            text = btnText
         ) {
             onIntent(SuccessIntent.Submit)
         }
@@ -148,8 +150,9 @@ private fun SuccessScreenPreview() {
     val state = SuccessUiState()
     SuccessContent(
         state = state,
-        title = "Sign In Succesfully!",
+        title = "Sign In Successfully!",
         desc = "Congratulations, Jenny! Access granted. Time for productivity!",
+        btnText = "Go to Homepage",
         onIntent = {}
     )
 }

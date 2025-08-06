@@ -1,13 +1,12 @@
 package com.greatwolf.taskmaster.navigation
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.greatwolf.auth.create.SignUpScreen
+import com.greatwolf.auth.success.SuccessScreen
 import com.greatwolf.auth.verification.VerificationScreen
 import com.greatwolf.onboarding.OnboardingScreen
 import com.greatwolf.taskmaster.SplashScreen
@@ -52,7 +51,25 @@ fun BasicNavigation() {
                 VerificationScreen(
                     vm = koinViewModel {
                         parametersOf(key.email)
+                    },
+                    navigate = { title, desc, btnText ->
+                        backStack.add(
+                            Route.Success(
+                                title = title,
+                                desc = desc,
+                                btnText = btnText
+                            )
+                        )
                     }
+                )
+            }
+
+            entry<Route.Success> { key ->
+                SuccessScreen(
+                    title = key.title,
+                    desc = key.desc,
+                    btnText = key.btnText,
+                    navigate = { }
                 )
             }
         }

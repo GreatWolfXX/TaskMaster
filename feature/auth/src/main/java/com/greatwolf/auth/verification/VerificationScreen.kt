@@ -42,16 +42,21 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun VerificationScreen(
     vm: VerificationViewModel = koinViewModel(),
-    isPasswordReset: Boolean = false
+    isPasswordReset: Boolean = false,
+    navigate: (title: String, desc: String, btnText: String) -> Unit
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
     val event by vm.event.collectAsStateWithLifecycle(VerificationEvent.Idle)
+
+    val title = stringResource(R.string.verificated_successfully)
+    val desc = stringResource(R.string.your_email_verified)
+    val btnText = stringResource(R.string.go_to_homepage)
 
     LaunchedEffect(event) {
         when (event) {
             VerificationEvent.Idle -> {}
             VerificationEvent.Submit -> {
-
+                navigate(title, desc, btnText)
             }
         }
     }
