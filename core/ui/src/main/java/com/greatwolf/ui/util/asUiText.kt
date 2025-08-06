@@ -1,32 +1,32 @@
 package com.greatwolf.ui.util
 
-import com.greatwolf.common.Error
+import com.greatwolf.common.InputError
 import com.greatwolf.ui.R
 
-fun Error.EmailError.asUiText(): UiText = when (this) {
-    Error.EmailError.NO_VALID -> UiText.StringResource(
+fun InputError.Email.asUiText(): UiText = when (this) {
+    InputError.Email.NO_VALID -> UiText.StringResource(
         R.string.err_no_valid
     )
 }
 
-fun Error.PasswordError.asUiText(): UiText = when (this) {
-    Error.PasswordError.TOO_SHORT -> UiText.StringResource(
+fun InputError.Password.asUiText(): UiText = when (this) {
+    InputError.Password.TOO_SHORT -> UiText.StringResource(
         R.string.err_too_short
     )
 
-    Error.PasswordError.NO_UPPERCASE -> UiText.StringResource(
+    InputError.Password.NO_UPPERCASE -> UiText.StringResource(
         R.string.err_no_uppercase
     )
 
-    Error.PasswordError.NO_LETTER -> UiText.StringResource(
+    InputError.Password.NO_LETTER -> UiText.StringResource(
         R.string.err_no_letter
     )
 
-    Error.PasswordError.NO_DIGIT -> UiText.StringResource(
+    InputError.Password.NO_DIGIT -> UiText.StringResource(
         R.string.err_no_digit
     )
 
-    Error.PasswordError.REPEAT_PASSWORD_NO_MATCH -> UiText.StringResource(
+    InputError.Password.REPEAT_PASSWORD_NO_MATCH -> UiText.StringResource(
         R.string.err_repeat_password_no_match
     )
 }
