@@ -1,5 +1,6 @@
 package com.greatwolf.ui.component
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.greatwolf.ui.R
@@ -68,5 +70,16 @@ private fun LogoWithText(
         text = stringResource(R.string.app_name),
         style = textStyle,
         color = if (isSystemInDarkTheme()) Neutral50 else Neutral700
+    )
+}
+
+@Preview
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Composable
+private fun AppLogoPreview() {
+    AppLogo(
+        isVertical = false
     )
 }
