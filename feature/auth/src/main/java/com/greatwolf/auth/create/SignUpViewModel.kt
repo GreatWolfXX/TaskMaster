@@ -3,10 +3,9 @@ package com.greatwolf.auth.create
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greatwolf.auth.R
-import com.greatwolf.common.Error
+import com.greatwolf.common.InputError
 import com.greatwolf.common.Result
-import com.greatwolf.common.asResult
-import com.greatwolf.domain.usecase.SignUpUseCase
+import com.greatwolf.domain.repository.AuthRepository
 import com.greatwolf.domain.usecase.ValidatePasswordUseCase
 import com.greatwolf.ui.util.UiText
 import com.greatwolf.ui.util.asUiText
@@ -50,7 +49,7 @@ sealed class SignUpEvent {
 
 class SignUpViewModel(
     private val validatePasswordUseCase: ValidatePasswordUseCase,
-    private val signUpUseCase: SignUpUseCase
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<SignUpUiState>(SignUpUiState())
@@ -114,7 +113,7 @@ class SignUpViewModel(
     private fun validateEmail(email: String) {
         val isEmailValid = email.isEmailValid()
         if (!isEmailValid) {
-            _state.update { it.copy(emailError = Error.EmailError.NO_VALID.asUiText()) }
+            _state.update { it.copy(emailError = InputError.Email.NO_VALID.asUiText()) }
         } else {
             _state.update { it.copy(emailError = null) }
         }
@@ -139,26 +138,31 @@ class SignUpViewModel(
     private fun validateRepeatPassword(password: String, repeatPassword: String) {
         val isRepeatPasswordValid = password.isRepeatPasswordValid(repeatPassword)
         if (!isRepeatPasswordValid) {
-            _state.update { it.copy(passwordRepeatError = Error.PasswordError.REPEAT_PASSWORD_NO_MATCH.asUiText()) }
+            _state.update { it.copy(passwordRepeatError = InputError.Password.REPEAT_PASSWORD_NO_MATCH.asUiText()) }
         } else {
             _state.update { it.copy(passwordRepeatError = null) }
         }
     }
 
     private fun signUp() {
-        signUpUseCase.invoke(
+        authRepository.signUp(
             email = _state.value.email,
             password = _state.value.password
-        )
-            .asResult()
-            .map { result ->
-                when (result) {
-                    is Result.Error -> {}
-                    Result.Loading -> {}
-                    is Result.Success -> {
-                        _event.send(SignUpEvent.Submit)
-                    }
+        ).map { result ->
+            when (result) {
+                is Result.Error -> {
+                    _state.update { it.copy(loading = false) }
                 }
-            }.launchIn(viewModelScope)
+
+                Result.Loading -> {
+                    _state.update { it.copy(loading = true) }
+                }
+
+                is Result.Success -> {
+                    _event.send(SignUpEvent.Submit)
+                    _state.update { it.copy(loading = false) }
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 }

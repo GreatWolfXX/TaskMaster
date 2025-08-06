@@ -35,6 +35,7 @@ import com.greatwolf.ui.component.CustomCheckbox
 import com.greatwolf.ui.component.CustomTextField
 import com.greatwolf.ui.component.CustomTextFieldType
 import com.greatwolf.ui.component.DividerWithText
+import com.greatwolf.ui.component.LoadingOverlay
 import com.greatwolf.ui.constant.PRIVACY_TAG
 import com.greatwolf.ui.constant.SIGN_IN_TAG
 import com.greatwolf.ui.constant.TERMS_TAG
@@ -178,6 +179,8 @@ private fun SignUpContent(
         Spacer(modifier = Modifier.size(32.dp))
         AlreadyHaveAccountBlock { }
     }
+
+    LoadingOverlay(state.loading)
 }
 
 @Composable
