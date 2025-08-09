@@ -19,7 +19,7 @@ class AuthRepositoryImpl(
     override fun signUp(
         email: String,
         password: String
-    ): Flow<Result<Unit, DataError>> = flow {
+    ): Flow<Result<Unit, DataError.Network>> = flow {
         supabaseClient.auth.signUpWith(Email) {
             this.email = email
             this.password = password
@@ -30,7 +30,7 @@ class AuthRepositoryImpl(
     override fun signUpOtpVerification(
         email: String,
         otp: String
-    ): Flow<Result<Unit, DataError>> = flow {
+    ): Flow<Result<Unit, DataError.Network>> = flow {
         supabaseClient.auth.verifyEmailOtp(
             type = OtpType.Email.SIGNUP,
             email = email,
@@ -39,7 +39,7 @@ class AuthRepositoryImpl(
         emit(Unit)
     }.asResult(::mapToDataError)
 
-    override fun signUpOtpVerificationResend(email: String): Flow<Result<Unit, DataError>> = flow {
+    override fun signUpOtpVerificationResend(email: String): Flow<Result<Unit, DataError.Network>> = flow {
         val response = supabaseClient.auth.resendEmail(
             type = OtpType.Email.SIGNUP,
             email = email

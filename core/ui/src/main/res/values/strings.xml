@@ -14,4 +14,7 @@
     <string name="err_no_letter">Password must contain at least one letter</string>
     <string name="err_no_digit">Password must contain at least one digit</string>
     <string name="err_repeat_password_no_match">The password is not the same</string>
+    <string name="err_invalid_email_format">Invalid email format</string>
+    <string name="err_over_email_send_rate_limit">A confirmation code has already been sent to this email address.</string>
+    <string name="err_unknown">An unexpected error has occurred. Please try again.</string>
 </resources>

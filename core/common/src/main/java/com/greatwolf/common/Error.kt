@@ -20,6 +20,7 @@ sealed interface InputError : Error {
 
 sealed interface DataError : Error {
     enum class Network : DataError {
+        EMAIL_ADDRESS_INVALID,
         OVER_EMAIL_SEND_RATE_LIMIT,
         UNKNOWN
     }

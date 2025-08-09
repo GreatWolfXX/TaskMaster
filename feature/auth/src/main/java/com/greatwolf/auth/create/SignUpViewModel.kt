@@ -3,6 +3,7 @@ package com.greatwolf.auth.create
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greatwolf.auth.R
+import com.greatwolf.common.DataError
 import com.greatwolf.common.InputError
 import com.greatwolf.common.Result
 import com.greatwolf.domain.repository.AuthRepository
@@ -151,6 +152,15 @@ class SignUpViewModel(
         ).map { result ->
             when (result) {
                 is Result.Error -> {
+                    when (result.error) {
+                        DataError.Network.OVER_EMAIL_SEND_RATE_LIMIT -> {
+                            _event.send(SignUpEvent.Submit)
+                        }
+
+                        else -> {
+                            _state.update { it.copy(snackbarMessage = result.error.asUiText()) }
+                        }
+                    }
                     _state.update { it.copy(loading = false) }
                 }
 
