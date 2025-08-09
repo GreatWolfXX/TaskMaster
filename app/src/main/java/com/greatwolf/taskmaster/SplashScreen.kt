@@ -40,7 +40,7 @@ fun SplashScreen(
 
     val percentage by animateFloatAsState(
         targetValue = state.progress,
-        animationSpec = tween(durationMillis = 3000)
+        animationSpec = tween(durationMillis = SPLASH_DELAY.toInt())
     )
 
     LaunchedEffect(event) {
