@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import com.composeuisuite.ohteepee.OhTeePeeDefaults
 import com.composeuisuite.ohteepee.OhTeePeeInput
 import com.greatwolf.ui.R
+import com.greatwolf.ui.constant.IS_SENT_CODE_BY_DEFAULT
 import com.greatwolf.ui.constant.OTP_CODE_LENGTH
 import com.greatwolf.ui.constant.RESEND_OTP_DELAY_SECONDS
 import com.greatwolf.ui.constant.TERMS_TAG
@@ -68,8 +69,10 @@ fun OtpForm(
     onClickResend: () -> Unit,
 ) {
     var resentDelay by remember { mutableIntStateOf(RESEND_OTP_DELAY_SECONDS) }
-    var isSentCode by remember { mutableStateOf(false) }
+    var isSentCode by remember { mutableStateOf(IS_SENT_CODE_BY_DEFAULT) }
     val clickableTextColor = if (isSystemInDarkTheme()) Primary300 else Primary200
+
+    val activeCellColor = if (isSystemInDarkTheme()) Primary600 else Primary50
 
     LaunchedEffect(isSentCode) {
         if (isSentCode) {
@@ -120,9 +123,12 @@ fun OtpForm(
     )
 
     val activeCellConfig = defaultCellConfig.copy(
-        borderColor = if (isSystemInDarkTheme()) Primary600 else Primary50,
+        borderColor = activeCellColor,
         textStyle = Typography.headlineLarge.copy(
             color = Primary300
+        ),
+        placeHolderTextStyle = Typography.displayMedium.copy(
+            color = activeCellColor,
         )
     )
 
