@@ -6,6 +6,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.greatwolf.auth.create.SignUpScreen
+import com.greatwolf.auth.login.SignInScreen
 import com.greatwolf.auth.success.SuccessScreen
 import com.greatwolf.auth.verification.VerificationScreen
 import com.greatwolf.onboarding.OnboardingScreen
@@ -41,10 +42,17 @@ fun BasicNavigation() {
 
             entry<Route.SignUp> {
                 SignUpScreen(
-                    navigateVerification = { email ->
+                    navigateToVerification = { email ->
                         backStack.add(Route.Verification(email))
+                    },
+                    navigateToSignIn = {
+                        backStack.add(Route.SignIn)
                     }
                 )
+            }
+
+            entry<Route.SignIn> {
+                SignInScreen()
             }
 
             entry<Route.Verification> { key ->
@@ -60,6 +68,9 @@ fun BasicNavigation() {
                                 btnText = btnText
                             )
                         )
+                    },
+                    navigateBack = {
+                        backStack.removeLastOrNull()
                     }
                 )
             }

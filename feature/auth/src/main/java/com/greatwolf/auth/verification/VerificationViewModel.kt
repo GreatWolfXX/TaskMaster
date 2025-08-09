@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.greatwolf.common.Result
 import com.greatwolf.domain.repository.AuthRepository
 import com.greatwolf.ui.util.UiText
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -74,10 +75,15 @@ class VerificationViewModel(
         authRepository.signUpOtpVerification(_state.value.email, _state.value.otpValue)
             .map { result ->
                 when (result) {
-                    is Result.Error -> {}
-                    Result.Loading -> {}
+                    is Result.Error -> {
+                        _state.update { it.copy(loading = false) }
+                    }
+                    Result.Loading -> {
+                        _state.update { it.copy(loading = true) }
+                    }
                     is Result.Success -> {
                         _event.send(VerificationEvent.Submit)
+                        _state.update { it.copy(loading = false) }
                     }
                 }
             }.launchIn(viewModelScope)
@@ -87,9 +93,15 @@ class VerificationViewModel(
         authRepository.signUpOtpVerificationResend(_state.value.email)
             .map { result ->
                 when (result) {
-                    is Result.Error -> {}
-                    Result.Loading -> {}
-                    is Result.Success -> {}
+                    is Result.Error -> {
+                        _state.update { it.copy(loading = false) }
+                    }
+                    Result.Loading -> {
+                        _state.update { it.copy(loading = true) }
+                    }
+                    is Result.Success -> {
+                        _state.update { it.copy(loading = false) }
+                    }
                 }
             }.launchIn(viewModelScope)
     }

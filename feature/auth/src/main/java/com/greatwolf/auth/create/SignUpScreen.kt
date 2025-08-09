@@ -56,7 +56,8 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun SignUpScreen(
     vm: SignUpViewModel = koinViewModel(),
-    navigateVerification: (String) -> Unit
+    navigateToVerification: (String) -> Unit,
+    navigateToSignIn: () -> Unit,
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
     val event by vm.event.collectAsStateWithLifecycle(SignUpEvent.Idle)
@@ -65,7 +66,7 @@ fun SignUpScreen(
         when (event) {
             SignUpEvent.Idle -> {}
             SignUpEvent.Submit -> {
-                navigateVerification(state.email)
+                navigateToVerification(state.email)
             }
         }
     }
@@ -83,14 +84,16 @@ fun SignUpScreen(
         state = state,
         onIntent = { intent ->
             vm.onIntent(intent)
-        }
+        },
+        navigateToSignIn = navigateToSignIn
     )
 }
 
 @Composable
 private fun SignUpContent(
     state: SignUpUiState,
-    onIntent: (SignUpIntent) -> Unit
+    onIntent: (SignUpIntent) -> Unit,
+    navigateToSignIn: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -180,7 +183,7 @@ private fun SignUpContent(
             onClickFacebook = { }
         )
         Spacer(modifier = Modifier.size(32.dp))
-        AlreadyHaveAccountBlock { }
+        AlreadyHaveAccountBlock(navigateToSignIn)
     }
 
     LoadingOverlay(state.loading)
@@ -249,7 +252,7 @@ private fun TermsAndPrivacyBlock(
 
 @Composable
 private fun AlreadyHaveAccountBlock(
-    onClick: () -> Unit
+    onClickSignIn: () -> Unit
 ) {
     val clickableTextColor = if (isSystemInDarkTheme()) Primary300 else Primary200
 
@@ -266,7 +269,7 @@ private fun AlreadyHaveAccountBlock(
                     ),
                     pressedStyle = SpanStyle(background = Primary600)
                 ),
-                linkInteractionListener = { onClick() }
+                linkInteractionListener = { onClickSignIn() }
             )
         ) {
             append(stringResource(R.string.sign_in))
@@ -289,6 +292,7 @@ private fun SignUpScreenPreview() {
     val state = SignUpUiState()
     SignUpContent(
         state = state,
-        onIntent = { }
+        onIntent = { },
+        navigateToSignIn = {}
     )
 }

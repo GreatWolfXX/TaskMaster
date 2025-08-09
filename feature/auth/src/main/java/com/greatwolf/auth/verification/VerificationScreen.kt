@@ -1,6 +1,7 @@
 package com.greatwolf.auth.verification
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,6 +30,7 @@ import com.greatwolf.ui.component.CustomButton
 import com.greatwolf.ui.component.CustomButtonSize
 import com.greatwolf.ui.component.CustomButtonType
 import com.greatwolf.ui.component.CustomIconButton
+import com.greatwolf.ui.component.LoadingOverlay
 import com.greatwolf.ui.component.OtpForm
 import com.greatwolf.ui.provider.LocalSnackbarHostState
 import com.greatwolf.ui.theme.Neutral100
@@ -43,7 +46,8 @@ import org.koin.androidx.compose.koinViewModel
 fun VerificationScreen(
     vm: VerificationViewModel = koinViewModel(),
     isPasswordReset: Boolean = false,
-    navigate: (title: String, desc: String, btnText: String) -> Unit
+    navigate: (title: String, desc: String, btnText: String) -> Unit,
+    navigateBack: () -> Unit
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
     val event by vm.event.collectAsStateWithLifecycle(VerificationEvent.Idle)
@@ -75,7 +79,8 @@ fun VerificationScreen(
         isPasswordReset = isPasswordReset,
         onIntent = { intent ->
             vm.onIntent(intent)
-        }
+        },
+        navigateBack = navigateBack
     )
 }
 
@@ -83,7 +88,8 @@ fun VerificationScreen(
 private fun VerificationContent(
     state: VerificationUiState,
     isPasswordReset: Boolean,
-    onIntent: (VerificationIntent) -> Unit
+    onIntent: (VerificationIntent) -> Unit,
+    navigateBack: () -> Unit
 ) {
     val title =
         if (isPasswordReset) stringResource(R.string.password_reset_verification_title) else stringResource(
@@ -96,13 +102,14 @@ private fun VerificationContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp)
             .padding(bottom = 40.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.size(24.dp))
         TopMenu(
-            onClickBack = { },
+            onClickBack = navigateBack,
             onClickInfo = { }
         )
         Spacer(modifier = Modifier.size(20.dp))
@@ -153,6 +160,8 @@ private fun VerificationContent(
             }
         }
     }
+
+    LoadingOverlay(state.loading)
 }
 
 @Composable
@@ -188,6 +197,7 @@ private fun VerificationScreenPreview() {
     VerificationContent(
         state = state,
         isPasswordReset = false,
-        onIntent = {}
+        onIntent = {},
+        navigateBack = {}
     )
 }
