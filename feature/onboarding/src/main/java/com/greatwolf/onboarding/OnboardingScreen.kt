@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -128,7 +129,6 @@ private fun PagerScreen(
     onboardingPages: OnboardingPages
 ) {
     val backgroundImage = if (isSystemInDarkTheme()) Primary600 else Primary0
-    val backgroundContent = if (isSystemInDarkTheme()) Dark else Light
     val title = if (isSystemInDarkTheme()) Neutral50 else Neutral700
     val desc = if (isSystemInDarkTheme()) Neutral200 else Neutral500
 
@@ -151,7 +151,7 @@ private fun PagerScreen(
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
                 .shadow(4.dp)
-                .background(backgroundContent)
+                .background(MaterialTheme.colorScheme.background)
         ) {
             Column(
                 modifier = Modifier

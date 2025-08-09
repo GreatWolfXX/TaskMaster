@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,8 +26,6 @@ import com.greatwolf.taskmaster.navigation.Route
 import com.greatwolf.ui.component.AppLogo
 import com.greatwolf.ui.component.LoadingBar
 import com.greatwolf.ui.theme.BodyXSmallTextStyleNormal
-import com.greatwolf.ui.theme.Dark
-import com.greatwolf.ui.theme.Light
 import com.greatwolf.ui.theme.Neutral200
 import com.greatwolf.ui.theme.Neutral500
 import org.koin.androidx.compose.koinViewModel
@@ -57,9 +56,7 @@ fun SplashScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                color = if (isSystemInDarkTheme()) Dark else Light
-            ),
+            .background(MaterialTheme.colorScheme.background),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {

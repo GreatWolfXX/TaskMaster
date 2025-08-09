@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -37,13 +38,11 @@ import com.greatwolf.ui.R
 import com.greatwolf.ui.constant.OTP_CODE_LENGTH
 import com.greatwolf.ui.constant.RESEND_OTP_DELAY_SECONDS
 import com.greatwolf.ui.constant.TERMS_TAG
-import com.greatwolf.ui.theme.Dark
 import com.greatwolf.ui.theme.Error0
 import com.greatwolf.ui.theme.Error100
 import com.greatwolf.ui.theme.Error25
 import com.greatwolf.ui.theme.Error300
 import com.greatwolf.ui.theme.Error50
-import com.greatwolf.ui.theme.Light
 import com.greatwolf.ui.theme.Neutral100
 import com.greatwolf.ui.theme.Neutral200
 import com.greatwolf.ui.theme.Neutral50
@@ -107,7 +106,7 @@ fun OtpForm(
     }
 
     val defaultCellConfig = OhTeePeeDefaults.cellConfiguration(
-        backgroundColor = if (isSystemInDarkTheme()) Dark else Light,
+        backgroundColor = MaterialTheme.colorScheme.background,
         borderColor = if (isSystemInDarkTheme()) Neutral100 else Neutral600,
         borderWidth = 1.dp,
         shape = RoundedCornerShape(4.dp),
