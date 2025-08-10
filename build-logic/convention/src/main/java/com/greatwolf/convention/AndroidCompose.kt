@@ -27,7 +27,7 @@ internal fun Project.configureAndroidCompose(
             // Coil
             implementation(libs.findLibrary("coil-compose").get())
 
-            //Test
+            // Test
             androidTestImplementation(libs.findLibrary("androidx-junit").get())
             androidTestImplementation(platform(bom))
             androidTestImplementation(libs.findLibrary("androidx-ui-test-junit4").get())

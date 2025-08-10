@@ -92,6 +92,7 @@ kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 
 # Ktor Client
 ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktorClient" }
+ktor-client-mock = { group = "io.ktor", name = "ktor-client-mock", version.ref = "ktorClient" }
 
 # Supabase
 supabase-bom = { group = "io.github.jan-tennert.supabase", name = "bom", version.ref = "supabase" }
