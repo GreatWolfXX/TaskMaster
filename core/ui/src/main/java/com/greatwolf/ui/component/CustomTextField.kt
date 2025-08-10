@@ -22,9 +22,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.LocalTextSelectionColors
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -101,10 +104,15 @@ fun CustomTextField(
 
     val borderShadowColorAlpha by animateFloatAsState(if (isFocused) 0.4f else 0f)
 
+    val textSelectionColors = TextSelectionColors(
+        handleColor = Primary50,
+        backgroundColor = Primary50.copy(alpha = 0.4f)
+    )
+
     Column(
         modifier = Modifier.animateContentSize()
     ) {
-        if(label.isNotBlank()) {
+        if (label.isNotBlank()) {
             Text(
                 text = label,
                 style = Typography.labelMedium,
@@ -114,48 +122,50 @@ fun CustomTextField(
         }
         Box(
             modifier = Modifier
-                .border(
+                         .border(
                     width = 2.dp,
                     shape = RoundedCornerShape(12.dp),
                     color = Primary200.copy(borderShadowColorAlpha)
                 )
                 .padding(1.dp)
         ) {
-            BasicTextField(
-                modifier = modifier
-                    .height(48.dp)
-                    .fillMaxWidth()
-                    .border(
-                        width = 1.dp,
-                        color = borderColor,
-                        shape = shape
+            CompositionLocalProvider(LocalTextSelectionColors provides textSelectionColors) {
+                BasicTextField(
+                    modifier = modifier
+                        .height(48.dp)
+                        .fillMaxWidth()
+                        .border(
+                            width = 1.dp,
+                            color = borderColor,
+                            shape = shape
+                        ),
+                    value = value,
+                    onValueChange = onValueChanged,
+                    enabled = enabled,
+                    textStyle = Typography.bodySmall.copy(
+                        color = if (isSystemInDarkTheme()) Neutral300 else Neutral700
                     ),
-                value = value,
-                onValueChange = onValueChanged,
-                enabled = enabled,
-                textStyle = Typography.bodySmall.copy(
-                    color = if (isSystemInDarkTheme()) Neutral300 else Neutral700
-                ),
-                keyboardOptions = keyboardOptions,
-                singleLine = true,
-                visualTransformation = visualTransformTypeCase,
-                cursorBrush = SolidColor(
-                    value = if (isSystemInDarkTheme()) Neutral300 else Neutral500
-                ),
-                interactionSource = interactionSource
-            ) { innerTextField ->
-                CustomTextFieldDecoration(
-                    type = type,
-                    leadingIcon = leadingIcon,
-                    trailingIcon = trailingIcon,
-                    placeholder = placeholder,
-                    showPlaceholder = !isFocused && value.isEmpty(),
-                    passwordVisibility = passwordVisibility,
-                    onPasswordVisibilityClick = {
-                        passwordVisibility = !passwordVisibility
-                    },
-                    innerTextField = innerTextField
-                )
+                    keyboardOptions = keyboardOptions,
+                    singleLine = true,
+                    visualTransformation = visualTransformTypeCase,
+                    cursorBrush = SolidColor(
+                        value = if (isSystemInDarkTheme()) Neutral300 else Neutral500
+                    ),
+                    interactionSource = interactionSource
+                ) { innerTextField ->
+                    CustomTextFieldDecoration(
+                        type = type,
+                        leadingIcon = leadingIcon,
+                        trailingIcon = trailingIcon,
+                        placeholder = placeholder,
+                        showPlaceholder = !isFocused && value.isEmpty(),
+                        passwordVisibility = passwordVisibility,
+                        onPasswordVisibilityClick = {
+                            passwordVisibility = !passwordVisibility
+                        },
+                        innerTextField = innerTextField
+                    )
+                }
             }
         }
         Hint(
@@ -224,7 +234,7 @@ private fun CustomTextFieldDecoration(
                 contentDescription = null
             )
         }
-        if(trailingIcon != null) {
+        if (trailingIcon != null) {
             Icon(
                 modifier = Modifier
                     .size(24.dp),
