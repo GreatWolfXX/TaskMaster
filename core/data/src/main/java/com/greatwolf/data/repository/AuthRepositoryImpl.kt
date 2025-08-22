@@ -1,7 +1,12 @@
 package com.greatwolf.data.repository
 
+import com.greatwolf.common.DataError
+import com.greatwolf.common.Result
+import com.greatwolf.common.asResult
+import com.greatwolf.data.mapper.mapToDataError
 import com.greatwolf.domain.repository.AuthRepository
 import io.github.jan.supabase.SupabaseClient
+import io.github.jan.supabase.auth.OtpType
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.providers.builtin.Email
 import kotlinx.coroutines.flow.Flow
@@ -14,11 +19,31 @@ class AuthRepositoryImpl(
     override fun signUp(
         email: String,
         password: String
-    ): Flow<Unit> = flow {
+    ): Flow<Result<Unit, DataError.Network>> = flow {
         supabaseClient.auth.signUpWith(Email) {
             this.email = email
             this.password = password
         }
         emit(Unit)
-    }
+    }.asResult(::mapToDataError)
+
+    override fun signUpOtpVerification(
+        email: String,
+        otp: String
+    ): Flow<Result<Unit, DataError.Network>> = flow {
+        supabaseClient.auth.verifyEmailOtp(
+            type = OtpType.Email.SIGNUP,
+            email = email,
+            token = otp
+        )
+        emit(Unit)
+    }.asResult(::mapToDataError)
+
+    override fun signUpOtpVerificationResend(email: String): Flow<Result<Unit, DataError.Network>> = flow {
+        val response = supabaseClient.auth.resendEmail(
+            type = OtpType.Email.SIGNUP,
+            email = email
+        )
+        emit(response)
+    }.asResult(::mapToDataError)
 }

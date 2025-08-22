@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -34,16 +35,15 @@ import androidx.compose.ui.unit.dp
 import com.composeuisuite.ohteepee.OhTeePeeDefaults
 import com.composeuisuite.ohteepee.OhTeePeeInput
 import com.greatwolf.ui.R
+import com.greatwolf.ui.constant.IS_SENT_CODE_BY_DEFAULT
 import com.greatwolf.ui.constant.OTP_CODE_LENGTH
 import com.greatwolf.ui.constant.RESEND_OTP_DELAY_SECONDS
 import com.greatwolf.ui.constant.TERMS_TAG
-import com.greatwolf.ui.theme.Dark
 import com.greatwolf.ui.theme.Error0
 import com.greatwolf.ui.theme.Error100
 import com.greatwolf.ui.theme.Error25
 import com.greatwolf.ui.theme.Error300
 import com.greatwolf.ui.theme.Error50
-import com.greatwolf.ui.theme.Light
 import com.greatwolf.ui.theme.Neutral100
 import com.greatwolf.ui.theme.Neutral200
 import com.greatwolf.ui.theme.Neutral50
@@ -69,8 +69,10 @@ fun OtpForm(
     onClickResend: () -> Unit,
 ) {
     var resentDelay by remember { mutableIntStateOf(RESEND_OTP_DELAY_SECONDS) }
-    var isSentCode by remember { mutableStateOf(false) }
+    var isSentCode by remember { mutableStateOf(IS_SENT_CODE_BY_DEFAULT) }
     val clickableTextColor = if (isSystemInDarkTheme()) Primary300 else Primary200
+
+    val activeCellColor = if (isSystemInDarkTheme()) Primary600 else Primary50
 
     LaunchedEffect(isSentCode) {
         if (isSentCode) {
@@ -107,7 +109,7 @@ fun OtpForm(
     }
 
     val defaultCellConfig = OhTeePeeDefaults.cellConfiguration(
-        backgroundColor = if (isSystemInDarkTheme()) Dark else Light,
+        backgroundColor = MaterialTheme.colorScheme.background,
         borderColor = if (isSystemInDarkTheme()) Neutral100 else Neutral600,
         borderWidth = 1.dp,
         shape = RoundedCornerShape(4.dp),
@@ -121,9 +123,12 @@ fun OtpForm(
     )
 
     val activeCellConfig = defaultCellConfig.copy(
-        borderColor = if (isSystemInDarkTheme()) Primary600 else Primary50,
+        borderColor = activeCellColor,
         textStyle = Typography.headlineLarge.copy(
             color = Primary300
+        ),
+        placeHolderTextStyle = Typography.displayMedium.copy(
+            color = activeCellColor,
         )
     )
 
@@ -138,8 +143,8 @@ fun OtpForm(
         activeCellConfig = activeCellConfig,
         errorCellConfig = errorCellConfig,
         cellModifier = Modifier
-            .height(60.dp)
-            .width(68.dp),
+            .height(48.dp)
+            .width(56.dp),
         placeHolder = stringResource(R.string.long_dash)
     )
 

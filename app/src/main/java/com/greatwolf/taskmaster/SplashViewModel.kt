@@ -29,7 +29,7 @@ sealed class SplashEvent {
     data object Finish : SplashEvent()
 }
 
-const val SPLASH_DELAY = 3000L
+const val SPLASH_DELAY = 1500L
 
 class SplashViewModel(
     private val settingsRepository: SettingsRepository

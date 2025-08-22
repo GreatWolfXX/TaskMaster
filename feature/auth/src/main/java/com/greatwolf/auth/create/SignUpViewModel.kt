@@ -3,8 +3,10 @@ package com.greatwolf.auth.create
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greatwolf.auth.R
-import com.greatwolf.common.Error
+import com.greatwolf.common.DataError
+import com.greatwolf.common.InputError
 import com.greatwolf.common.Result
+import com.greatwolf.domain.repository.AuthRepository
 import com.greatwolf.domain.usecase.ValidatePasswordUseCase
 import com.greatwolf.ui.util.UiText
 import com.greatwolf.ui.util.asUiText
@@ -47,7 +49,8 @@ sealed class SignUpEvent {
 }
 
 class SignUpViewModel(
-    private val validatePasswordUseCase: ValidatePasswordUseCase
+    private val validatePasswordUseCase: ValidatePasswordUseCase,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<SignUpUiState>(SignUpUiState())
@@ -90,11 +93,11 @@ class SignUpViewModel(
                     _state.value.emailError,
                     _state.value.passwordError,
                     _state.value.passwordRepeatError
-                ).any { it == null }
+                ).any { it != null }
 
                 viewModelScope.launch {
-                    if (!hasError) {
-                        _event.send(SignUpEvent.Submit)
+                    if (!hasError && _state.value.isAgreeTerms) {
+                        signUp()
                     } else {
                         _state.update {
                             it.copy(
@@ -111,7 +114,7 @@ class SignUpViewModel(
     private fun validateEmail(email: String) {
         val isEmailValid = email.isEmailValid()
         if (!isEmailValid) {
-            _state.update { it.copy(emailError = Error.EmailError.NO_VALID.asUiText()) }
+            _state.update { it.copy(emailError = InputError.Email.NO_VALID.asUiText()) }
         } else {
             _state.update { it.copy(emailError = null) }
         }
@@ -136,9 +139,40 @@ class SignUpViewModel(
     private fun validateRepeatPassword(password: String, repeatPassword: String) {
         val isRepeatPasswordValid = password.isRepeatPasswordValid(repeatPassword)
         if (!isRepeatPasswordValid) {
-            _state.update { it.copy(passwordRepeatError = Error.PasswordError.REPEAT_PASSWORD_NO_MATCH.asUiText()) }
+            _state.update { it.copy(passwordRepeatError = InputError.Password.REPEAT_PASSWORD_NO_MATCH.asUiText()) }
         } else {
             _state.update { it.copy(passwordRepeatError = null) }
         }
+    }
+
+    private fun signUp() {
+        authRepository.signUp(
+            email = _state.value.email,
+            password = _state.value.password
+        ).map { result ->
+            when (result) {
+                is Result.Error -> {
+                    when (result.error) {
+                        DataError.Network.OVER_EMAIL_SEND_RATE_LIMIT -> {
+                            _event.send(SignUpEvent.Submit)
+                        }
+
+                        else -> {
+                            _state.update { it.copy(snackbarMessage = result.error.asUiText()) }
+                        }
+                    }
+                    _state.update { it.copy(loading = false) }
+                }
+
+                Result.Loading -> {
+                    _state.update { it.copy(loading = true) }
+                }
+
+                is Result.Success -> {
+                    _event.send(SignUpEvent.Submit)
+                    _state.update { it.copy(loading = false) }
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 }

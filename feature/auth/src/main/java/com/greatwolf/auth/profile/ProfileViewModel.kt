@@ -2,7 +2,7 @@ package com.greatwolf.auth.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.greatwolf.common.Error
+import com.greatwolf.common.InputError
 import com.greatwolf.ui.util.UiText
 import com.greatwolf.ui.util.asUiText
 import com.greatwolf.ui.util.isEmailValid
@@ -77,7 +77,7 @@ class ProfileViewModel(
     private fun validateEmail(email: String) {
         val isEmailValid = email.isEmailValid()
         if (!isEmailValid) {
-            _state.update { it.copy(emailError = Error.EmailError.NO_VALID.asUiText()) }
+            _state.update { it.copy(emailError = InputError.Email.NO_VALID.asUiText()) }
         } else {
             _state.update { it.copy(emailError = null) }
         }

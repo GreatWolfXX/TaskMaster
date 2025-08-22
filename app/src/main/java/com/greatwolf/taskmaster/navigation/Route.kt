@@ -12,4 +12,17 @@ sealed class Route : NavKey {
 
     @Serializable
     data object SignUp : Route()
+
+    @Serializable
+    data object SignIn : Route()
+
+    @Serializable
+    data class Verification(val email: String) : Route()
+
+    @Serializable
+    data class Success(
+        val title: String,
+        val desc: String,
+        val btnText: String
+    ) : Route()
 }

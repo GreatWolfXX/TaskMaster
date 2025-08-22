@@ -1,6 +1,7 @@
 package com.greatwolf.auth.create
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,6 +37,7 @@ import com.greatwolf.ui.component.CustomCheckbox
 import com.greatwolf.ui.component.CustomTextField
 import com.greatwolf.ui.component.CustomTextFieldType
 import com.greatwolf.ui.component.DividerWithText
+import com.greatwolf.ui.component.LoadingOverlay
 import com.greatwolf.ui.constant.PRIVACY_TAG
 import com.greatwolf.ui.constant.SIGN_IN_TAG
 import com.greatwolf.ui.constant.TERMS_TAG
@@ -52,7 +55,9 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SignUpScreen(
-    vm: SignUpViewModel = koinViewModel()
+    vm: SignUpViewModel = koinViewModel(),
+    navigateToVerification: (String) -> Unit,
+    navigateToSignIn: () -> Unit,
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
     val event by vm.event.collectAsStateWithLifecycle(SignUpEvent.Idle)
@@ -61,7 +66,7 @@ fun SignUpScreen(
         when (event) {
             SignUpEvent.Idle -> {}
             SignUpEvent.Submit -> {
-
+                navigateToVerification(state.email)
             }
         }
     }
@@ -79,18 +84,21 @@ fun SignUpScreen(
         state = state,
         onIntent = { intent ->
             vm.onIntent(intent)
-        }
+        },
+        navigateToSignIn = navigateToSignIn
     )
 }
 
 @Composable
 private fun SignUpContent(
     state: SignUpUiState,
-    onIntent: (SignUpIntent) -> Unit
+    onIntent: (SignUpIntent) -> Unit,
+    navigateToSignIn: () -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -110,6 +118,7 @@ private fun SignUpContent(
         )
         Spacer(modifier = Modifier.size(40.dp))
         CustomTextField(
+            type = CustomTextFieldType.EMAIL,
             label = stringResource(R.string.your_email),
             placeholder = stringResource(R.string.email),
             value = state.email,
@@ -174,8 +183,10 @@ private fun SignUpContent(
             onClickFacebook = { }
         )
         Spacer(modifier = Modifier.size(32.dp))
-        AlreadyHaveAccountBlock { }
+        AlreadyHaveAccountBlock(navigateToSignIn)
     }
+
+    LoadingOverlay(state.loading)
 }
 
 @Composable
@@ -241,7 +252,7 @@ private fun TermsAndPrivacyBlock(
 
 @Composable
 private fun AlreadyHaveAccountBlock(
-    onClick: () -> Unit
+    onClickSignIn: () -> Unit
 ) {
     val clickableTextColor = if (isSystemInDarkTheme()) Primary300 else Primary200
 
@@ -258,7 +269,7 @@ private fun AlreadyHaveAccountBlock(
                     ),
                     pressedStyle = SpanStyle(background = Primary600)
                 ),
-                linkInteractionListener = { onClick() }
+                linkInteractionListener = { onClickSignIn() }
             )
         ) {
             append(stringResource(R.string.sign_in))
@@ -281,6 +292,7 @@ private fun SignUpScreenPreview() {
     val state = SignUpUiState()
     SignUpContent(
         state = state,
-        onIntent = { }
+        onIntent = { },
+        navigateToSignIn = {}
     )
 }

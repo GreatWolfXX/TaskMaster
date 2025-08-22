@@ -3,7 +3,7 @@ package com.greatwolf.auth.password
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greatwolf.auth.R
-import com.greatwolf.common.Error
+import com.greatwolf.common.InputError
 import com.greatwolf.common.Result
 import com.greatwolf.domain.usecase.ValidatePasswordUseCase
 import com.greatwolf.ui.util.UiText
@@ -111,7 +111,7 @@ class NewPasswordViewModel(
     private fun validateRepeatPassword(password: String, repeatPassword: String) {
         val isRepeatPasswordValid = password.isRepeatPasswordValid(repeatPassword)
         if (!isRepeatPasswordValid) {
-            _state.update { it.copy(passwordRepeatError = Error.PasswordError.REPEAT_PASSWORD_NO_MATCH.asUiText()) }
+            _state.update { it.copy(passwordRepeatError = InputError.Password.REPEAT_PASSWORD_NO_MATCH.asUiText()) }
         } else {
             _state.update { it.copy(passwordRepeatError = null) }
         }

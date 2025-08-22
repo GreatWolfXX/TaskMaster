@@ -13,7 +13,12 @@ sealed interface Result<out D, out E : RootError> {
     data object Loading : Result<Nothing, Nothing>
 }
 
-fun <D> Flow<D>.asResult(): Flow<Result<D, RootError>> =
-    map<D, Result<D, RootError>> { Result.Success(it) }
+fun <D, E : RootError> Flow<D>.asResult(
+    errorMapper: (Throwable) -> E
+): Flow<Result<D, E>> =
+    map<D, Result<D, E>> { Result.Success(it) }
         .onStart { emit(Result.Loading) }
-        .catch { emit(Result.Error(it.toError())) }
+        .catch { emit(Result.Error(errorMapper(it))) }
+
+fun <D> Flow<D>.asResult(): Flow<Result<D, RootError>> =
+    this.asResult { e -> Error.Unknown(e) }

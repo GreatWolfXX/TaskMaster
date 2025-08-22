@@ -3,7 +3,7 @@ package com.greatwolf.auth.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greatwolf.auth.R
-import com.greatwolf.common.Error
+import com.greatwolf.common.InputError
 import com.greatwolf.common.Result
 import com.greatwolf.domain.usecase.ValidatePasswordUseCase
 import com.greatwolf.ui.util.UiText
@@ -98,7 +98,7 @@ class SignInViewModel(
     private fun validateEmail(email: String) {
         val isEmailValid = email.isEmailValid()
         if (!isEmailValid) {
-            _state.update { it.copy(emailError = Error.EmailError.NO_VALID.asUiText()) }
+            _state.update { it.copy(emailError = InputError.Email.NO_VALID.asUiText()) }
         } else {
             _state.update { it.copy(emailError = null) }
         }
