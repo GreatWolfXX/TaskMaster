@@ -39,11 +39,23 @@ class AuthRepositoryImpl(
         emit(Unit)
     }.asResult(::mapToDataError)
 
-    override fun signUpOtpVerificationResend(email: String): Flow<Result<Unit, DataError.Network>> = flow {
-        val response = supabaseClient.auth.resendEmail(
-            type = OtpType.Email.SIGNUP,
-            email = email
-        )
+    override fun signUpOtpVerificationResend(email: String): Flow<Result<Unit, DataError.Network>> =
+        flow {
+            val response = supabaseClient.auth.resendEmail(
+                type = OtpType.Email.SIGNUP,
+                email = email
+            )
+            emit(response)
+        }.asResult(::mapToDataError)
+
+    override fun signIn(
+        email: String,
+        password: String
+    ): Flow<Result<Unit, DataError.Network>> = flow {
+        val response = supabaseClient.auth.signInWith(Email) {
+            this.email = email
+            this.password = password
+        }
         emit(response)
     }.asResult(::mapToDataError)
 }

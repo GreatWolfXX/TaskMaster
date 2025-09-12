@@ -9,4 +9,5 @@ interface AuthRepository {
     fun signUpOtpVerification(email: String, otp: String): Flow<Result<Unit, DataError.Network>>
     fun signUpOtpVerificationResend(email: String): Flow<Result<Unit, DataError.Network>>
 
+    fun signIn(email: String, password: String): Flow<Result<Unit, DataError.Network>>
 }
