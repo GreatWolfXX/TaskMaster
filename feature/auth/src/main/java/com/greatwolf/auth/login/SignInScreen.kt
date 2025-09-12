@@ -54,7 +54,10 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SignInScreen(
-    vm: SignInViewModel = koinViewModel()
+    vm: SignInViewModel = koinViewModel(),
+    navigateToHome: () -> Unit,
+    navigateToForgotPassword: () -> Unit,
+    navigateToSignUp: () -> Unit,
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
     val event by vm.event.collectAsStateWithLifecycle(SignInEvent.Idle)
@@ -63,7 +66,7 @@ fun SignInScreen(
         when (event) {
             SignInEvent.Idle -> {}
             SignInEvent.Submit -> {
-
+                navigateToHome()
             }
         }
     }
@@ -81,14 +84,18 @@ fun SignInScreen(
         state = state,
         onIntent = { intent ->
             vm.onIntent(intent)
-        }
+        },
+        navigateToForgotPassword = navigateToForgotPassword,
+        navigateToSignUp = navigateToSignUp
     )
 }
 
 @Composable
 private fun SignInContent(
     state: SignInUiState,
-    onIntent: (SignInIntent) -> Unit
+    onIntent: (SignInIntent) -> Unit,
+    navigateToForgotPassword: () -> Unit,
+    navigateToSignUp: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -142,7 +149,7 @@ private fun SignInContent(
             onCheckedChange = { value ->
                 onIntent(SignInIntent.ChangeIsRememberMe(value))
             },
-            onClickForgotPassword = { },
+            onClickForgotPassword = navigateToForgotPassword,
         )
         Spacer(modifier = Modifier.size(24.dp))
         CustomButton(
@@ -164,7 +171,7 @@ private fun SignInContent(
             onClickFacebook = { }
         )
         Spacer(modifier = Modifier.size(32.dp))
-        DontHaveAccountBlock { }
+        DontHaveAccountBlock(navigateToSignUp)
     }
 }
 
@@ -261,6 +268,8 @@ private fun SignInScreenPreview() {
     val state = SignInUiState()
     SignInContent(
         state = state,
-        onIntent = { }
+        onIntent = { },
+        navigateToForgotPassword = { },
+        navigateToSignUp = { }
     )
 }

@@ -52,7 +52,13 @@ fun BasicNavigation() {
             }
 
             entry<Route.SignIn> {
-                SignInScreen()
+                SignInScreen(
+                    navigateToHome = { },
+                    navigateToForgotPassword = { },
+                    navigateToSignUp = {
+                        backStack.add(Route.SignUp)
+                    },
+                )
             }
 
             entry<Route.Verification> { key ->
