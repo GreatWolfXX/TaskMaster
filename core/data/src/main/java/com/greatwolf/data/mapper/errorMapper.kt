@@ -8,6 +8,7 @@ import io.github.jan.supabase.auth.exception.AuthRestException
 fun mapAuthError(code: AuthErrorCode?): DataError.Network = when (code) {
     AuthErrorCode.EmailAddressInvalid -> DataError.Network.EMAIL_ADDRESS_INVALID
     AuthErrorCode.OverEmailSendRateLimit -> DataError.Network.OVER_EMAIL_SEND_RATE_LIMIT
+    AuthErrorCode.InvalidCredentials -> DataError.Network.INVALID_CREDENTIALS
     else -> DataError.Network.UNKNOWN
 }
 

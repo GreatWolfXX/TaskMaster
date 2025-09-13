@@ -3,6 +3,7 @@ package com.greatwolf.ui.util
 import com.greatwolf.common.DataError
 import com.greatwolf.common.InputError
 import com.greatwolf.ui.R
+import com.greatwolf.ui.util.UiText.*
 
 fun InputError.Email.asUiText(): UiText = when (this) {
     InputError.Email.NO_VALID -> UiText.StringResource(
@@ -33,15 +34,19 @@ fun InputError.Password.asUiText(): UiText = when (this) {
 }
 
 fun DataError.Network.asUiText(): UiText = when (this) {
-    DataError.Network.EMAIL_ADDRESS_INVALID -> UiText.StringResource(
+    DataError.Network.EMAIL_ADDRESS_INVALID -> StringResource(
         R.string.err_invalid_email_format
     )
 
-    DataError.Network.OVER_EMAIL_SEND_RATE_LIMIT -> UiText.StringResource(
+    DataError.Network.OVER_EMAIL_SEND_RATE_LIMIT -> StringResource(
         R.string.err_over_email_send_rate_limit
     )
 
-    DataError.Network.UNKNOWN -> UiText.StringResource(
+    DataError.Network.INVALID_CREDENTIALS -> StringResource(
+        R.string.err_invalid_credentials
+    )
+
+    DataError.Network.UNKNOWN -> StringResource(
         R.string.err_unknown
     )
 }
