@@ -24,8 +24,7 @@ sealed class SuccessEvent {
     data object Submit : SuccessEvent()
 }
 
-class SuccessViewModel(
-) : ViewModel() {
+class SuccessViewModel() : ViewModel() {
 
     private val _state = MutableStateFlow<SuccessUiState>(SuccessUiState())
     val state: StateFlow<SuccessUiState> = _state

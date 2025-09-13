@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greatwolf.common.Result
 import com.greatwolf.domain.repository.AuthRepository
+import com.greatwolf.domain.repository.SettingsRepository
 import com.greatwolf.ui.util.UiText
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.channels.Channel
@@ -16,6 +17,8 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+
+private const val IS_REMEMBER_SESSION = true
 
 data class VerificationUiState(
     val email: String = "",
@@ -38,7 +41,8 @@ sealed class VerificationEvent {
 
 class VerificationViewModel(
     private val email: String,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<VerificationUiState>(VerificationUiState())
@@ -82,6 +86,7 @@ class VerificationViewModel(
                         _state.update { it.copy(loading = true) }
                     }
                     is Result.Success -> {
+                        settingsRepository.setRememberSessionState(IS_REMEMBER_SESSION)
                         _event.send(VerificationEvent.Submit)
                         _state.update { it.copy(loading = false) }
                     }
