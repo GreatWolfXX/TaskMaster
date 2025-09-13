@@ -14,4 +14,10 @@ class SettingsRepositoryImpl(
 
     override fun isOnboardingCompleted(): Flow<Boolean> =
         dataStoreSettingsStore.readState(PreferencesKey.onboardingKey, false)
+
+    override suspend fun setRememberSessionState(remember: Boolean) =
+        dataStoreSettingsStore.saveState(PreferencesKey.rememberSession, remember)
+
+    override fun isRememberSession(): Flow<Boolean> =
+        dataStoreSettingsStore.readState(PreferencesKey.rememberSession, false)
 }
