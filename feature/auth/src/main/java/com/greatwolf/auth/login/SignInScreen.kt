@@ -55,18 +55,22 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun SignInScreen(
     vm: SignInViewModel = koinViewModel(),
-    navigateToHome: () -> Unit,
+    navigateToSuccess: (title: String, desc: String, btnText: String) -> Unit,
     navigateToForgotPassword: () -> Unit,
     navigateToSignUp: () -> Unit,
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
     val event by vm.event.collectAsStateWithLifecycle(SignInEvent.Idle)
 
+    val title = stringResource(R.string.sign_in_successfully)
+    val desc = stringResource(R.string.sign_in_successfully_desc)
+    val btnText = stringResource(R.string.go_to_homepage)
+
     LaunchedEffect(event) {
         when (event) {
             SignInEvent.Idle -> {}
             SignInEvent.Submit -> {
-                navigateToHome()
+                navigateToSuccess(title, desc, btnText)
             }
         }
     }

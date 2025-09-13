@@ -46,7 +46,7 @@ import org.koin.androidx.compose.koinViewModel
 fun VerificationScreen(
     vm: VerificationViewModel = koinViewModel(),
     isPasswordReset: Boolean = false,
-    navigate: (title: String, desc: String, btnText: String) -> Unit,
+    navigateToSuccess: (title: String, desc: String, btnText: String) -> Unit,
     navigateBack: () -> Unit
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
@@ -60,7 +60,7 @@ fun VerificationScreen(
         when (event) {
             VerificationEvent.Idle -> {}
             VerificationEvent.Submit -> {
-                navigate(title, desc, btnText)
+                navigateToSuccess(title, desc, btnText)
             }
         }
     }

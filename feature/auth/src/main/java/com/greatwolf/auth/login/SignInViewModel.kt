@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.greatwolf.auth.R
 import com.greatwolf.common.InputError
 import com.greatwolf.common.Result
+import com.greatwolf.domain.repository.AuthRepository
 import com.greatwolf.domain.usecase.ValidatePasswordUseCase
 import com.greatwolf.ui.util.UiText
 import com.greatwolf.ui.util.asUiText
@@ -43,7 +44,8 @@ sealed class SignInEvent {
 }
 
 class SignInViewModel(
-    private val validatePasswordUseCase: ValidatePasswordUseCase
+    private val validatePasswordUseCase: ValidatePasswordUseCase,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<SignInUiState>(SignInUiState())
@@ -81,7 +83,7 @@ class SignInViewModel(
 
                 viewModelScope.launch {
                     if (!hasError) {
-                        _event.send(SignInEvent.Submit)
+                        signIn()
                     } else {
                         _state.update {
                             it.copy(
@@ -118,5 +120,32 @@ class SignInViewModel(
                     }
                 }
             }.launchIn(viewModelScope)
+    }
+
+    private fun signIn() {
+        authRepository.signIn(
+            email = _state.value.email,
+            password = _state.value.password
+        ).map { result ->
+            when (result) {
+                is Result.Error -> {
+                    when (result.error) {
+                        else -> {
+                            _state.update { it.copy(snackbarMessage = result.error.asUiText()) }
+                        }
+                    }
+                    _state.update { it.copy(loading = false) }
+                }
+
+                Result.Loading -> {
+                    _state.update { it.copy(loading = true) }
+                }
+
+                is Result.Success -> {
+                    _event.send(SignInEvent.Submit)
+                    _state.update { it.copy(loading = false) }
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 }
