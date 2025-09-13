@@ -70,8 +70,8 @@ class SplashViewModel(
                     Result.Loading -> {}
                     is Result.Success -> {
                         val data = result.data
+                        _state.update { it.copy(progress = 1f) }
                         if (data.first) {
-                            _state.update { it.copy(progress = 1f) }
                             if (data.second) {
                                 _state.update { it.copy(destination = Route.Home) }
                             } else {
