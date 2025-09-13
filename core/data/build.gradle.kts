@@ -11,7 +11,7 @@ dependencies {
     implementation(projects.core.common)
     implementation(projects.core.datastore)
     implementation(projects.core.domain)
-//    implementation(projects.core.models)
+    implementation(projects.core.model)
 
     // DataStore
     implementation(libs.datastore.preferences)
