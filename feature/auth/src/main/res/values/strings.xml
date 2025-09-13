@@ -40,6 +40,8 @@
     <string name="btn_continue">Continue</string>
     <string name="verificated_successfully">Verificated Successfully!</string>
     <string name="your_email_verified">Your email has bent\nverified successfully.</string>
+    <string name="sign_in_successfully">Sign In Successfully!</string>
+    <string name="sign_in_successfully_desc">Congratulations, %1$s! Access granted. Time for productivity!</string>
 
     <string name="snackbar_fill_fields">Please fill out all required fields!</string>
 </resources>
