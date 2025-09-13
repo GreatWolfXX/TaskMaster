@@ -160,7 +160,7 @@ private fun SignInContent(
             modifier = Modifier.fillMaxWidth(),
             type = CustomButtonType.PRIMARY,
             size = CustomButtonSize.SMALL,
-            text = stringResource(R.string.sign_up)
+            text = stringResource(R.string.sign_in)
         ) {
             onIntent(SignInIntent.Submit)
         }
