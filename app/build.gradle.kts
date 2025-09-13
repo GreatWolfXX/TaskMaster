@@ -31,7 +31,7 @@ dependencies {
     implementation(projects.core.database)
     implementation(projects.core.datastore)
     implementation(projects.core.domain)
-    implementation(projects.core.models)
+    implementation(projects.core.model)
     implementation(projects.core.ui)
 
     implementation(projects.feature.onboarding)

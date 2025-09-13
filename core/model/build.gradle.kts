@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.greatwolf.models"
+    namespace = "com.greatwolf.model"
 
 }
 
