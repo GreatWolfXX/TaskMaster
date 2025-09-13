@@ -14,6 +14,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
@@ -55,20 +57,21 @@ class SplashViewModel(
         authRepository.signOut().first()
     }
 
-    private suspend fun getDestination() {
+    private fun getDestination() {
         combine(
             settingsRepository.isOnboardingCompleted(),
             settingsRepository.isRememberSession()
         ) { onboardingResult, rememberResult ->
             Pair(onboardingResult, rememberResult)
         }.asResult()
-            .collect { result ->
+            .map { result ->
                 when (result) {
                     is Result.Error -> {}
                     Result.Loading -> {}
                     is Result.Success -> {
                         val data = result.data
                         if (data.first) {
+                            _state.update { it.copy(progress = 1f) }
                             if (data.second) {
                                 _state.update { it.copy(destination = Route.Home) }
                             } else {
@@ -78,12 +81,12 @@ class SplashViewModel(
                         }
                     }
                 }
-            }
+            }.launchIn(viewModelScope)
     }
 
     private fun startSplashLoading() {
+        getDestination()
         viewModelScope.launch {
-            getDestination()
             delay(SPLASH_DELAY)
             _event.send(SplashEvent.Finish)
         }
