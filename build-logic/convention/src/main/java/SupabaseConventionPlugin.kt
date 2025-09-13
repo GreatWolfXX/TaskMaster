@@ -7,6 +7,10 @@ import org.gradle.kotlin.dsl.dependencies
 class SupabaseConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
+            with(pluginManager) {
+                apply(libs.findPlugin("jetbrains-kotlin-serialization").get().get().pluginId)
+            }
+
             dependencies {
                 val bom = libs.findLibrary("supabase-bom").get()
                 implementation(platform(bom))
@@ -14,6 +18,7 @@ class SupabaseConventionPlugin : Plugin<Project> {
                 implementation(libs.findLibrary("supabase-postgrest").get())
                 implementation(libs.findLibrary("supabase-storage").get())
                 implementation(libs.findLibrary("ktor-client-cio").get())
+                implementation(libs.findLibrary("kotlinx-serialization-core").get())
 
                 // Test
                 implementation(libs.findLibrary("ktor-client-mock").get())
