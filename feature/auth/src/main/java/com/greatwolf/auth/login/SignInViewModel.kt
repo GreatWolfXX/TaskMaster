@@ -6,6 +6,7 @@ import com.greatwolf.auth.R
 import com.greatwolf.common.InputError
 import com.greatwolf.common.Result
 import com.greatwolf.domain.repository.AuthRepository
+import com.greatwolf.domain.repository.SettingsRepository
 import com.greatwolf.domain.usecase.ValidatePasswordUseCase
 import com.greatwolf.ui.util.UiText
 import com.greatwolf.ui.util.asUiText
@@ -19,7 +20,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 data class SignInUiState(
     val email: String = "",
@@ -45,7 +45,8 @@ sealed class SignInEvent {
 
 class SignInViewModel(
     private val validatePasswordUseCase: ValidatePasswordUseCase,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<SignInUiState>(SignInUiState())
@@ -79,18 +80,16 @@ class SignInViewModel(
                 val hasError = listOf(
                     _state.value.emailError,
                     _state.value.passwordError,
-                ).any { it == null }
+                ).any { it != null }
 
-                viewModelScope.launch {
-                    if (!hasError) {
-                        signIn()
-                    } else {
-                        _state.update {
-                            it.copy(
-                                snackbarMessage =
-                                    UiText.StringResource(R.string.snackbar_fill_fields)
-                            )
-                        }
+                if (!hasError) {
+                    signIn()
+                } else {
+                    _state.update {
+                        it.copy(
+                            snackbarMessage =
+                                UiText.StringResource(R.string.snackbar_fill_fields)
+                        )
                     }
                 }
             }
@@ -142,6 +141,7 @@ class SignInViewModel(
                 }
 
                 is Result.Success -> {
+                    settingsRepository.setRememberSessionState(_state.value.isRememberMe)
                     _event.send(SignInEvent.Submit)
                     _state.update { it.copy(loading = false) }
                 }

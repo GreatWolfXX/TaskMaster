@@ -21,7 +21,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 data class SignUpUiState(
     val email: String = "",
@@ -95,16 +94,14 @@ class SignUpViewModel(
                     _state.value.passwordRepeatError
                 ).any { it != null }
 
-                viewModelScope.launch {
-                    if (!hasError && _state.value.isAgreeTerms) {
-                        signUp()
-                    } else {
-                        _state.update {
-                            it.copy(
-                                snackbarMessage =
-                                    UiText.StringResource(R.string.snackbar_fill_fields)
-                            )
-                        }
+                if (!hasError && _state.value.isAgreeTerms) {
+                    signUp()
+                } else {
+                    _state.update {
+                        it.copy(
+                            snackbarMessage =
+                                UiText.StringResource(R.string.snackbar_fill_fields)
+                        )
                     }
                 }
             }
