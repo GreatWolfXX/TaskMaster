@@ -38,6 +38,7 @@ import com.greatwolf.ui.component.CustomCheckbox
 import com.greatwolf.ui.component.CustomTextField
 import com.greatwolf.ui.component.CustomTextFieldType
 import com.greatwolf.ui.component.DividerWithText
+import com.greatwolf.ui.component.LoadingOverlay
 import com.greatwolf.ui.constant.SIGN_IN_TAG
 import com.greatwolf.ui.constant.TERMS_TAG
 import com.greatwolf.ui.provider.LocalSnackbarHostState
@@ -63,7 +64,7 @@ fun SignInScreen(
     val event by vm.event.collectAsStateWithLifecycle(SignInEvent.Idle)
 
     val title = stringResource(R.string.sign_in_successfully)
-    val desc = stringResource(R.string.sign_in_successfully_desc)
+    val desc = stringResource(R.string.sign_in_successfully_desc, state.profile?.fullName.orEmpty())
     val btnText = stringResource(R.string.go_to_homepage)
 
     LaunchedEffect(event) {
@@ -177,6 +178,8 @@ private fun SignInContent(
         Spacer(modifier = Modifier.size(32.dp))
         DontHaveAccountBlock(navigateToSignUp)
     }
+
+    LoadingOverlay(state.loading)
 }
 
 @Composable

@@ -6,15 +6,21 @@ import com.greatwolf.auth.R
 import com.greatwolf.common.InputError
 import com.greatwolf.common.Result
 import com.greatwolf.domain.repository.AuthRepository
+import com.greatwolf.domain.repository.ProfileRepository
 import com.greatwolf.domain.repository.SettingsRepository
 import com.greatwolf.domain.usecase.ValidatePasswordUseCase
+import com.greatwolf.models.Profile
 import com.greatwolf.ui.util.UiText
 import com.greatwolf.ui.util.asUiText
 import com.greatwolf.ui.util.isEmailValid
+import io.github.aakira.napier.Napier
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -22,6 +28,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 
 data class SignInUiState(
+    val profile: Profile? = null,
     val email: String = "",
     val emailError: UiText? = null,
     val password: String = "",
@@ -46,6 +53,7 @@ sealed class SignInEvent {
 class SignInViewModel(
     private val validatePasswordUseCase: ValidatePasswordUseCase,
     private val authRepository: AuthRepository,
+    private val profileRepository: ProfileRepository,
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
@@ -121,6 +129,34 @@ class SignInViewModel(
             }.launchIn(viewModelScope)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private fun getProfile() {
+        authRepository.currentSession()
+            .flatMapLatest { result ->
+                when (result) {
+                    is Result.Error, Result.Loading -> emptyFlow()
+                    is Result.Success -> {
+                        val id = result.data?.id.orEmpty()
+                        profileRepository.getProfileById(id)
+                    }
+                }
+            }.map { result ->
+                when (result) {
+                    is Result.Error -> {}
+                    Result.Loading -> {}
+                    is Result.Success -> {
+                        _event.send(SignInEvent.Submit)
+                        _state.update {
+                            it.copy(
+                                profile = result.data,
+                                loading = false
+                            )
+                        }
+                    }
+                }
+            }.launchIn(viewModelScope)
+    }
+
     private fun signIn() {
         authRepository.signIn(
             email = _state.value.email,
@@ -142,8 +178,7 @@ class SignInViewModel(
 
                 is Result.Success -> {
                     settingsRepository.setRememberSessionState(_state.value.isRememberMe)
-                    _event.send(SignInEvent.Submit)
-                    _state.update { it.copy(loading = false) }
+                    getProfile()
                 }
             }
         }.launchIn(viewModelScope)
