@@ -18,7 +18,7 @@ class SupabaseConventionPlugin : Plugin<Project> {
                 implementation(libs.findLibrary("supabase-postgrest").get())
                 implementation(libs.findLibrary("supabase-storage").get())
                 implementation(libs.findLibrary("ktor-client-cio").get())
-                implementation(libs.findLibrary("kotlinx-serialization-core").get())
+                implementation(libs.findLibrary("kotlinx-serialization-json").get())
 
                 // Test
                 implementation(libs.findLibrary("ktor-client-mock").get())

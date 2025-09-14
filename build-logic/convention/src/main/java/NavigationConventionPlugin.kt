@@ -15,7 +15,7 @@ class NavigationConventionPlugin : Plugin<Project> {
                 implementation(libs.findLibrary("androidx-navigation3-runtime").get())
                 implementation(libs.findLibrary("androidx-navigation3-ui").get())
                 implementation(libs.findLibrary("androidx-lifecycle-viewmodel-navigation3").get())
-                implementation(libs.findLibrary("kotlinx-serialization-core").get())
+                implementation(libs.findLibrary("kotlinx-serialization-json").get())
             }
         }
     }
