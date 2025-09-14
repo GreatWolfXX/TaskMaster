@@ -2,6 +2,7 @@ package com.greatwolf.auth.success
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.greatwolf.domain.repository.AuthRepository
 import com.greatwolf.ui.util.UiText
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,8 +25,7 @@ sealed class SuccessEvent {
     data object Submit : SuccessEvent()
 }
 
-class SuccessViewModel(
-) : ViewModel() {
+class SuccessViewModel: ViewModel() {
 
     private val _state = MutableStateFlow<SuccessUiState>(SuccessUiState())
     val state: StateFlow<SuccessUiState> = _state

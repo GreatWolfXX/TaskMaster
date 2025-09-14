@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greatwolf.common.Result
 import com.greatwolf.common.asResult
+import com.greatwolf.domain.repository.AuthRepository
 import com.greatwolf.domain.repository.SettingsRepository
 import com.greatwolf.taskmaster.navigation.Route
 import kotlinx.coroutines.channels.Channel
@@ -11,6 +12,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
@@ -32,7 +35,8 @@ sealed class SplashEvent {
 const val SPLASH_DELAY = 1500L
 
 class SplashViewModel(
-    private val settingsRepository: SettingsRepository
+    private val settingsRepository: SettingsRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private var _event: Channel<SplashEvent> = Channel()
@@ -49,17 +53,31 @@ class SplashViewModel(
             initialValue = SplashUiState()
         )
 
+    private suspend fun signOut() {
+        authRepository.signOut().first()
+    }
+
     private fun getDestination() {
-        settingsRepository.isOnboardingCompleted()
-            .asResult()
+        combine(
+            settingsRepository.isOnboardingCompleted(),
+            settingsRepository.isRememberSession()
+        ) { onboardingResult, rememberResult ->
+            Pair(onboardingResult, rememberResult)
+        }.asResult()
             .map { result ->
                 when (result) {
                     is Result.Error -> {}
                     Result.Loading -> {}
                     is Result.Success -> {
+                        val data = result.data
                         _state.update { it.copy(progress = 1f) }
-                        if (result.data) {
-                            _state.update { it.copy(destination = Route.SignUp) }
+                        if (data.first) {
+                            if (data.second) {
+                                _state.update { it.copy(destination = Route.Home) }
+                            } else {
+                                _state.update { it.copy(destination = Route.SignUp) }
+                                signOut()
+                            }
                         }
                     }
                 }
@@ -67,8 +85,8 @@ class SplashViewModel(
     }
 
     private fun startSplashLoading() {
+        getDestination()
         viewModelScope.launch {
-            getDestination()
             delay(SPLASH_DELAY)
             _event.send(SplashEvent.Finish)
         }

@@ -52,7 +52,21 @@ fun BasicNavigation() {
             }
 
             entry<Route.SignIn> {
-                SignInScreen()
+                SignInScreen(
+                    navigateToSuccess = { title, desc, btnText ->
+                        backStack.add(
+                            Route.Success(
+                                title = title,
+                                desc = desc,
+                                btnText = btnText
+                            )
+                        )
+                    },
+                    navigateToForgotPassword = { },
+                    navigateToSignUp = {
+                        backStack.add(Route.SignUp)
+                    },
+                )
             }
 
             entry<Route.Verification> { key ->
@@ -60,7 +74,7 @@ fun BasicNavigation() {
                     vm = koinViewModel {
                         parametersOf(key.email)
                     },
-                    navigate = { title, desc, btnText ->
+                    navigateToSuccess = { title, desc, btnText ->
                         backStack.add(
                             Route.Success(
                                 title = title,

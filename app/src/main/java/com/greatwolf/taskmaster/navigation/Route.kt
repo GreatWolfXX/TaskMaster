@@ -25,4 +25,7 @@ sealed class Route : NavKey {
         val desc: String,
         val btnText: String
     ) : Route()
+
+    @Serializable
+    data object Home: Route()
 }

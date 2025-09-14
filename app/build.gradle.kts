@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId = "com.greatwolf.taskmaster"
         versionCode = 1
-        versionName = "0.12.0"
+        versionName = "0.13.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -31,7 +31,7 @@ dependencies {
     implementation(projects.core.database)
     implementation(projects.core.datastore)
     implementation(projects.core.domain)
-    implementation(projects.core.models)
+    implementation(projects.core.model)
     implementation(projects.core.ui)
 
     implementation(projects.feature.onboarding)

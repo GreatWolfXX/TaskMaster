@@ -5,6 +5,7 @@ import com.greatwolf.auth.login.SignInViewModel
 import com.greatwolf.auth.password.NewPasswordViewModel
 import com.greatwolf.auth.password.ResetPasswordViewModel
 import com.greatwolf.auth.profile.ProfileViewModel
+import com.greatwolf.auth.success.SuccessViewModel
 import com.greatwolf.auth.verification.VerificationViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
@@ -16,4 +17,5 @@ val authModule = module {
     viewModelOf(::ResetPasswordViewModel)
     viewModelOf(::ProfileViewModel)
     viewModelOf(::VerificationViewModel)
+    viewModelOf(::SuccessViewModel)
 }
