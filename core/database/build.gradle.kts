@@ -8,14 +8,18 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.model)
 
     // SQLDelight
     implementation(libs.sqldelight)
+
+    // Koin
+    implementation(libs.koin.core)
 }
 
 sqldelight {
     databases {
-        create("TaskMaster") {
+        create("Database") {
             packageName.set("com.greatwolf")
         }
     }
