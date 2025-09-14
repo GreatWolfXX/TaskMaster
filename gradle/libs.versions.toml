@@ -47,6 +47,8 @@ ohteepee = "1.1.0"
 
 napier = "2.7.1"
 
+sqldelight = "2.1.0"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
@@ -115,6 +117,9 @@ ohteepee = { group = "com.github.composeuisuite", name = "ohteepee", version.ref
 # Napier
 napier = { group = "io.github.aakira", name = "napier", version.ref = "napier"}
 
+# SQLDelight
+sqldelight = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqldelight"}
+
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
@@ -127,6 +132,7 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 
 # Kotlin Serialization
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization" }
