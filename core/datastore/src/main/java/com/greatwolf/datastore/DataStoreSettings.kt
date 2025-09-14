@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.map
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
-class DataStoreSettingsStore(context: Context) {
+class DataStoreSettings(context: Context) {
     private val dataStore = context.dataStore
 
     suspend fun <T> saveState(key: Preferences.Key<T>, value: T) {
