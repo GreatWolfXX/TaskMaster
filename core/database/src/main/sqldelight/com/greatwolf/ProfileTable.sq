@@ -1,0 +1,28 @@
+CREATE TABLE profile (
+    user_id TEXT NOT NULL,
+    full_name TEXT,
+    user_name TEXT,
+    data_of_birth TEXT,
+    email TEXT NOT NULL,
+    phone TEXT,
+    image_url TEXT
+);
+
+getProfileById:
+SELECT profile.*
+FROM profile
+WHERE user_id = ?;
+
+updateProfileById:
+UPDATE profile
+SET full_name = ?, user_name = ?, data_of_birth = ?, email = ?, phone = ?
+WHERE user_id = ?;
+
+updateProfileImageById:
+UPDATE profile
+SET image_url = ?
+WHERE user_id = ?;
+
+deleteProfileById:
+DELETE FROM profile
+WHERE user_id = ?;
