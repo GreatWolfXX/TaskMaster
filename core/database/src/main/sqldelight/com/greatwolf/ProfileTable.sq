@@ -1,5 +1,5 @@
 CREATE TABLE profile (
-    user_id TEXT NOT NULL,
+    user_id TEXT PRIMARY KEY,
     full_name TEXT,
     user_name TEXT,
     data_of_birth TEXT,
@@ -7,6 +7,11 @@ CREATE TABLE profile (
     phone TEXT,
     image_url TEXT
 );
+
+insertProfile:
+INSERT INTO profile(full_name, user_name, data_of_birth, email, phone, image_url)
+VALUES (?, ?, ?, ?, ?, ?);
+
 
 getProfileById:
 SELECT profile.*

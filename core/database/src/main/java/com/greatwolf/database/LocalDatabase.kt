@@ -10,6 +10,17 @@ class LocalDatabase(
     private val database = Database(databaseDriver)
     private val query = database.profileTableQueries
 
+    fun insertProfile(profile: Profile) {
+        query.insertProfile(
+            full_name = profile.fullName,
+            user_name = profile.userName,
+            data_of_birth = profile.dataOfBirth,
+            email = profile.email,
+            phone = profile.phone,
+            image_url = profile.imageUrl
+        )
+    }
+
     fun getProfileById(id: String): Profile? {
         val profileEntity = query.getProfileById(id)
             .executeAsOneOrNull()
