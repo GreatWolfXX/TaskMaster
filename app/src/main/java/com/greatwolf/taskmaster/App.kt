@@ -4,6 +4,7 @@ import android.app.Application
 import com.greatwolf.auth.di.authModule
 import com.greatwolf.data.di.dataModule
 import com.greatwolf.domain.di.domainModule
+import com.greatwolf.home.di.homeModule
 import com.greatwolf.onboarding.di.onboardingModule
 import com.greatwolf.taskmaster.di.appModule
 import io.github.aakira.napier.DebugAntilog
@@ -25,7 +26,8 @@ class App : Application() {
                 dataModule,
                 domainModule,
                 onboardingModule,
-                authModule
+                authModule,
+                homeModule
             )
         }
     }

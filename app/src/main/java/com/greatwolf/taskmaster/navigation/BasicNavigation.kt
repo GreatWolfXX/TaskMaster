@@ -9,6 +9,7 @@ import com.greatwolf.auth.create.SignUpScreen
 import com.greatwolf.auth.login.SignInScreen
 import com.greatwolf.auth.success.SuccessScreen
 import com.greatwolf.auth.verification.VerificationScreen
+import com.greatwolf.home.HomeScreen
 import com.greatwolf.onboarding.OnboardingScreen
 import com.greatwolf.taskmaster.SplashScreen
 import org.koin.androidx.compose.koinViewModel
@@ -95,6 +96,12 @@ fun BasicNavigation() {
                     desc = key.desc,
                     btnText = key.btnText,
                     navigate = { }
+                )
+            }
+
+            entry<Route.Home> { key ->
+                HomeScreen(
+
                 )
             }
         }

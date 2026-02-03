@@ -36,6 +36,7 @@ dependencies {
 
     implementation(projects.feature.onboarding)
     implementation(projects.feature.auth)
+    implementation(projects.feature.home)
 
     // Koin
     implementation(libs.koin.androidx.compose)
