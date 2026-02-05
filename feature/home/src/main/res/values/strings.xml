@@ -1,4 +1,11 @@
 <resources>
     <string name="welcome_back">Welcome back, %1$s</string>
     <string name="ready_conquer_day">Ready to conquer your day?</string>
+    <string name="your_project">Your Project</string>
+    <string name="to_do_list">To Do List</string>
+    <string name="see_all">See All</string>
+    <string name="all_task">All Task</string>
+    <string name="today">Today</string>
+    <string name="ongoing">Ongoing</string>
+    <string name="completed">Completed</string>
 </resources>
