@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,8 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.greatwolf.models.Task
+import com.greatwolf.ui.preview.provider.TaskProvider
 import com.greatwolf.ui.theme.BodyXSmallTextStyleNormal
 import com.greatwolf.ui.theme.Neutral100
 import com.greatwolf.ui.theme.Neutral200
@@ -106,20 +107,6 @@ fun TaskCard(
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-private fun TaskCardPreview() {
-    val data = Task(
-        id = "0",
-        title = "Complete Website Redesign",
-        description = "Redesign Project",
-        completed = true,
-        date = "Today",
-        time = "2:00 PM"
-    )
-    Box(
-        modifier = Modifier.padding(horizontal = 16.dp)
-    ) {
-        TaskCard(data = data) {
-
-        }
-    }
+private fun TaskCardPreview(@PreviewParameter(TaskProvider::class) task: Task) {
+    TaskCard(data = task) { }
 }
