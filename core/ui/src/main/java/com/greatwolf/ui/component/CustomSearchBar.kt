@@ -3,14 +3,14 @@ package com.greatwolf.ui.component
 import android.content.res.Configuration
 import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -42,18 +43,18 @@ fun CustomSearchBar(
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }
 
-    SearchBar(
-        modifier = Modifier
-            .fillMaxWidth()
-            .border(
-                width = 1.dp,
-                color = if (isSystemInDarkTheme()) Neutral600 else Neutral100,
-                shape = RoundedCornerShape(10.dp)
-            ),
-        shape = RoundedCornerShape(10.dp),
-        windowInsets = WindowInsets(top = 0.dp),
-        inputField = {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(
+                    width = 1.dp,
+                    color = if (isSystemInDarkTheme()) Neutral600 else Neutral100,
+                    shape = RoundedCornerShape(10.dp)
+                )
+        ) {
             SearchBarDefaults.InputField(
+                modifier = Modifier.fillMaxWidth(),
                 query = textFieldState.text.toString(),
                 onQueryChange = { textFieldState.edit { replace(0, length, it) } },
                 onSearch = {
@@ -76,13 +77,14 @@ fun CustomSearchBar(
                         contentDescription = null,
                         tint = if (isSystemInDarkTheme()) Neutral200 else Neutral500
                     )
-                }
+                },
+                colors = SearchBarDefaults.inputFieldColors(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    disabledContainerColor = Color.Transparent,
+                )
             )
-        },
-        expanded = expanded,
-        onExpandedChange = { expanded = it },
-    ) {
-
+        }
     }
 }
 
