@@ -10,22 +10,22 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
 internal fun Project.configureKotlinAndroid(
-    commonExtension: CommonExtension<*, *, *, *, *, *>,
+    commonExtension: CommonExtension
 ) {
     commonExtension.apply {
         compileSdk = libs.findVersion("compileSdk").get().toString().toInt()
 
-        defaultConfig {
+        defaultConfig.apply {
             minSdk = libs.findVersion("minSdk").get().toString().toInt()
         }
 
-        compileOptions {
+        compileOptions.apply {
             val projectJavaVersion = JavaVersion.toVersion(libs.findVersion("javaVersion").get())
             sourceCompatibility = projectJavaVersion
             targetCompatibility = projectJavaVersion
         }
 
-        packaging {
+        packaging.apply {
             resources {
                 excludes += "META-INF/LICENSE.md"
                 excludes += "META-INF/LICENSE-notice.md"

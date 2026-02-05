@@ -44,6 +44,11 @@ gradlePlugin {
             implementationClass = "LibraryConventionPlugin"
         }
 
+        register("libraryAndroid") {
+            id = libs.plugins.taskmaster.library.android.get().pluginId
+            implementationClass = "LibraryAndroidConventionPlugin"
+        }
+
         register("libraryCompose") {
             id = libs.plugins.taskmaster.library.compose.get().pluginId
             implementationClass = "LibraryComposeConventionPlugin"
