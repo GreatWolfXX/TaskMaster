@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.taskmaster.library)
+    alias(libs.plugins.taskmaster.library.android)
     alias(libs.plugins.taskmaster.supabase)
 }
 

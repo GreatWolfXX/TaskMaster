@@ -2,10 +2,6 @@ plugins {
     alias(libs.plugins.taskmaster.library)
 }
 
-android {
-    namespace = "com.greatwolf.domain"
-}
-
 dependencies {
     implementation(projects.core.common)
     implementation(projects.core.model)

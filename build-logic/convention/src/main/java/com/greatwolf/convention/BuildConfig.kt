@@ -5,10 +5,10 @@ import org.gradle.api.Project
 import java.util.Properties
 
 internal fun Project.configureBuildConfig(
-    commonExtension: CommonExtension<*, *, *, *, *, *>,
+    commonExtension: CommonExtension
 ) {
     commonExtension.apply {
-        buildFeatures {
+        buildFeatures.apply {
             buildConfig = true
         }
 
@@ -22,7 +22,7 @@ internal fun Project.configureBuildConfig(
         val supabaseUrl = localProperties["SUPABASE_URL"].toString()
         val supabaseKey = localProperties["SUPABASE_KEY"].toString()
 
-        defaultConfig {
+        defaultConfig.apply {
             buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
             buildConfigField("String", "SUPABASE_KEY", "\"$supabaseKey\"")
         }
