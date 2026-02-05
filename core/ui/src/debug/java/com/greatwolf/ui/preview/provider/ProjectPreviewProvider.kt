@@ -7,7 +7,3 @@ import com.greatwolf.ui.preview.data.ProjectMock
 class ProjectProvider : PreviewParameterProvider<Project> {
     override val values = ProjectMock.previewProjects.asSequence()
 }
-
-class ListProjectsProvider : PreviewParameterProvider<List<Project>> {
-    override val values = sequenceOf(ProjectMock.previewProjects)
-}

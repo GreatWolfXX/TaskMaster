@@ -107,6 +107,8 @@ fun TaskCard(
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-private fun TaskCardPreview(@PreviewParameter(TaskProvider::class) task: Task) {
+private fun TaskCardPreview(
+    @PreviewParameter(TaskProvider::class) task: Task
+) {
     TaskCard(data = task) { }
 }

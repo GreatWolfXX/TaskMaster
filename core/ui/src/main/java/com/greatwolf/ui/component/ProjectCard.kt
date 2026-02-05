@@ -244,6 +244,8 @@ private fun ProgressBar(
 
 @Preview
 @Composable
-private fun ProjectCardPreview(@PreviewParameter(ProjectProvider::class) project: Project) {
+private fun ProjectCardPreview(
+    @PreviewParameter(ProjectProvider::class) project: Project
+) {
     ProjectCard(data = project)
 }
