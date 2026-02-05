@@ -38,6 +38,8 @@ private val bodyMediumFontSize = 16.sp
 private val bodySmallFontSize = 14.sp
 private val bodyXSmallFontSize = 12.sp
 
+private val noteFontSize = 10.sp
+
 val Typography = Typography(
     displayLarge = TextStyle(
         fontFamily = fontFamily,
@@ -162,8 +164,7 @@ val BodySmallStrikethroughTextStyle = TextStyle(
 
 val NoteTextStyle = TextStyle(
     fontFamily = fontFamily,
-    fontWeight = FontWeight.Medium,
-    fontSize = bodySmallFontSize,
-    lineHeight = bodySmallFontSize * lineHeight155,
-    textDecoration = TextDecoration.LineThrough
+    fontWeight = FontWeight.Light,
+    fontSize = noteFontSize,
+    lineHeight = noteFontSize * lineHeight155
 )
