@@ -1,6 +1,5 @@
 package com.greatwolf.ui.component
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,10 +27,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.greatwolf.common.extension.normalize
 import com.greatwolf.models.Project
 import com.greatwolf.ui.R
+import com.greatwolf.ui.preview.provider.ProjectProvider
 import com.greatwolf.ui.theme.BodyXSmallTextStyleMedium
 import com.greatwolf.ui.theme.BodyXSmallTextStyleNormal
 import com.greatwolf.ui.theme.Error200
@@ -242,23 +243,7 @@ private fun ProgressBar(
 }
 
 @Preview
-@Preview(
-    uiMode = Configuration.UI_MODE_NIGHT_YES
-)
 @Composable
-private fun ProjectCardPreview() {
-    val data = Project(
-        id = "0",
-        priority = 2,
-        title = "E-commerce Platform Redesign - NovaShop",
-        description = "Overhauling the user interface design of NovaShop, our e-commerce platform, for a modern and asdsdasdasdsdfsdsdfsdfsdfdsffsdasd",
-        progress = 70,
-        date = "January 30, 2024",
-        color = 0xFF0041AA
-    )
-    Box(
-        modifier = Modifier.padding(horizontal = 16.dp)
-    ) {
-        ProjectCard(data = data)
-    }
+private fun ProjectCardPreview(@PreviewParameter(ProjectProvider::class) project: Project) {
+    ProjectCard(data = project)
 }
