@@ -1,0 +1,101 @@
+package com.greatwolf.ui.component
+
+import android.content.res.Configuration
+import androidx.compose.foundation.border
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.greatwolf.ui.R
+import com.greatwolf.ui.theme.Neutral100
+import com.greatwolf.ui.theme.Neutral200
+import com.greatwolf.ui.theme.Neutral300
+import com.greatwolf.ui.theme.Neutral400
+import com.greatwolf.ui.theme.Neutral500
+import com.greatwolf.ui.theme.Neutral600
+import com.greatwolf.ui.theme.Typography
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomSearchBar(
+    textFieldState: TextFieldState,
+    onSearch: (String) -> Unit
+) {
+    var expanded by rememberSaveable { mutableStateOf(false) }
+
+    SearchBar(
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(
+                width = 1.dp,
+                color = if (isSystemInDarkTheme()) Neutral600 else Neutral100,
+                shape = RoundedCornerShape(10.dp)
+            ),
+        shape = RoundedCornerShape(10.dp),
+        windowInsets = WindowInsets(top = 0.dp),
+        inputField = {
+            SearchBarDefaults.InputField(
+                query = textFieldState.text.toString(),
+                onQueryChange = { textFieldState.edit { replace(0, length, it) } },
+                onSearch = {
+                    onSearch(textFieldState.text.toString())
+                    expanded = false
+                },
+                expanded = expanded,
+                onExpandedChange = { expanded = it },
+                placeholder = {
+                    Text(
+                        text = stringResource(R.string.search_project),
+                        style = Typography.labelSmall,
+                        color = if (isSystemInDarkTheme()) Neutral300 else Neutral400
+                    )
+                },
+                leadingIcon = {
+                    Icon(
+                        modifier = Modifier.size(24.dp),
+                        imageVector = ImageVector.vectorResource(R.drawable.ic_search),
+                        contentDescription = null,
+                        tint = if (isSystemInDarkTheme()) Neutral200 else Neutral500
+                    )
+                }
+            )
+        },
+        expanded = expanded,
+        onExpandedChange = { expanded = it },
+    ) {
+
+    }
+}
+
+@Preview
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Composable
+private fun CustomSearchBarPreview() {
+    val textFieldState = remember { TextFieldState() }
+
+    CustomSearchBar(
+        textFieldState = textFieldState,
+        onSearch = { }
+    )
+}

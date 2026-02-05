@@ -11,6 +11,7 @@
     <string name="high">High</string>
     <string name="medium">Medium</string>
     <string name="low">Low</string>
+    <string name="search_project">Search your project</string>
 
     <string name="err_no_valid">Incorrect email format</string>
     <string name="err_too_short">Password is too short</string>
